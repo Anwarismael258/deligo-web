@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -29,6 +30,7 @@ class _GuestHomePageState extends State<GuestHomePage> {
   final _heroController = PageController();
   Timer? _heroTimer;
   int _heroIndex = 0;
+  Position? _userPosition;
   String _selectedCategory = 'Todos';
   static const _categories = [
     'Todos',
@@ -40,6 +42,48 @@ class _GuestHomePageState extends State<GuestHomePage> {
     'Lanches',
     'Bebidas',
   ];
+
+  Future<void> _requestUserLocation() async {
+    try {
+      var permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+      }
+      if (permission == LocationPermission.denied ||
+          permission == LocationPermission.deniedForever) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text(
+                'Ative a localização para calcular a rota e encontrar restaurantes próximos.',
+              ),
+            ),
+          );
+        }
+        return;
+      }
+      final position = await Geolocator.getCurrentPosition();
+      if (!mounted) return;
+      setState(() => _userPosition = position);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Localização encontrada. Podemos calcular a rota da entrega.',
+          ),
+        ),
+      );
+    } catch (_) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Não foi possível obter a localização neste momento.',
+            ),
+          ),
+        );
+      }
+    }
+  }
 
   @override
   void initState() {
@@ -179,6 +223,19 @@ class _GuestHomePageState extends State<GuestHomePage> {
               ),
             ),
           ),
+          IconButton(
+            tooltip: 'Usar a minha localização',
+            onPressed: _requestUserLocation,
+            icon: Icon(
+              _userPosition == null
+                  ? Icons.location_on_outlined
+                  : Icons.location_on,
+              size: 21,
+              color: _userPosition == null
+                  ? Colors.white
+                  : const Color(0xFFFF7A45),
+            ),
+          ),
           PopupMenuButton<String>(
             tooltip: 'Idioma',
             icon: const Icon(Icons.language_rounded, size: 21),
@@ -189,15 +246,14 @@ class _GuestHomePageState extends State<GuestHomePage> {
               PopupMenuItem(value: 'en', child: Text('🇬🇧  English')),
             ],
           ),
-          IconButton(
-            tooltip: AppStrings.of(context, 'enter'),
-            onPressed: () => context.go('/login'),
+          PopupMenuButton<String>(
+            tooltip: AppStrings.of(context, 'account'),
             icon: const Icon(Icons.person_outline_rounded, size: 22),
-          ),
-          IconButton(
-            tooltip: AppStrings.of(context, 'create_account'),
-            onPressed: () => context.go('/register'),
-            icon: const Icon(Icons.person_add_alt_1_rounded, size: 21),
+            onSelected: (value) => context.go(value),
+            itemBuilder: (_) => const [
+              PopupMenuItem(value: '/login', child: Text('Entrar')),
+              PopupMenuItem(value: '/register', child: Text('Criar conta')),
+            ],
           ),
           const SizedBox(width: 4),
         ],
@@ -479,29 +535,39 @@ class _GuestHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.sizeOf(context).width < 600;
+    final isEnglish = context.watch<AppLanguageController>().isEnglish;
     final slides = [
       (
-        title: 'A tua próxima refeição começa aqui.',
-        text:
-            'Descobre restaurantes, escolhe os teus pratos favoritos e acompanha a tua entrega.',
+        title: isEnglish
+            ? 'Your next meal starts here.'
+            : 'A tua próxima refeição começa aqui.',
+        text: isEnglish
+            ? 'Discover restaurants, choose your favourite dishes and track your delivery.'
+            : 'Descobre restaurantes, escolhe os teus pratos favoritos e acompanha a tua entrega.',
         image: 'assets/marketing/deligo-food-hero.png',
-        primary: 'Explorar restaurantes',
+        primary: isEnglish ? 'Explore restaurants' : 'Explorar restaurantes',
         action: () => context.go('/home'),
       ),
       (
-        title: 'O teu restaurante merece chegar mais longe.',
-        text:
-            'Apresenta os teus pratos, recebe pedidos e alcança novos clientes com a DeliGo.',
+        title: isEnglish
+            ? 'Your restaurant deserves to go further.'
+            : 'O teu restaurante merece chegar mais longe.',
+        text: isEnglish
+            ? 'Showcase your dishes, receive orders and reach new customers with DeliGo.'
+            : 'Apresenta os teus pratos, recebe pedidos e alcança novos clientes com a DeliGo.',
         image: 'assets/marketing/maputo-deligo-hero.png',
-        primary: 'Quero ser parceiro',
+        primary: isEnglish ? 'Become a partner' : 'Quero ser parceiro',
         action: () => context.go('/register?role=restaurant'),
       ),
       (
-        title: 'Mais perto. Mais simples. Mais DeliGo.',
-        text:
-            'Uma experiência de entrega pensada para aproximar pessoas e restaurantes.',
+        title: isEnglish
+            ? 'Closer. Simpler. More DeliGo.'
+            : 'Mais perto. Mais simples. Mais DeliGo.',
+        text: isEnglish
+            ? 'A delivery experience designed to bring people and restaurants closer.'
+            : 'Uma experiência de entrega pensada para aproximar pessoas e restaurantes.',
         image: 'assets/marketing/deligo-food-hero.png',
-        primary: 'Começar agora',
+        primary: isEnglish ? 'Start now' : 'Começar agora',
         action: () => context.go('/register'),
       ),
     ];

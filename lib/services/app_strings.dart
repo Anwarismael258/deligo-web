@@ -34,6 +34,7 @@ class AppStrings {
       'next': 'Proximo',
       'enter': 'Entrar',
       'create_account': 'Criar conta',
+      'account': 'Conta',
       'go_to_login': 'Ir para login',
       'choose_language': 'Escolha o idioma',
       'choose_language_desc':
@@ -105,6 +106,7 @@ class AppStrings {
       'next': 'Next',
       'enter': 'Enter',
       'create_account': 'Create account',
+      'account': 'Account',
       'go_to_login': 'Go to login',
       'choose_language': 'Choose your language',
       'choose_language_desc':
