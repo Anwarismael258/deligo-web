@@ -20,6 +20,8 @@
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="description" content="DeliGo Eats é a plataforma oficial de entrega de comida da DeliGo Triunfal, Lda., empresa moçambicana de tecnologia. Descubra restaurantes, pratos e peça comida online em Moçambique.">
   <meta name="author" content="DeliGo Triunfal, Lda.">
+  <meta name="application-name" content="DeliGo Eats">
+  <meta property="og:site_name" content="DeliGo Eats">
   <meta name="keywords" content="DeliGo Eats, DeliGo Triunfal, delivery Maputo, restaurantes Maputo, pedir comida online, Mocambique">
   <meta name="theme-color" content="#e91c25">
   <meta property="og:title" content="DeliGo Eats | Food Delivery in Mozambique">
@@ -46,16 +48,41 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": ["Organization", "FoodEstablishment"],
-    "name": "DeliGo Triunfal, Lda.",
-    "url": "https://www.deligoeats.com/",
-    "logo": "https://www.deligoeats.com/assets/1200x630wa%20(1).png",
-    "description": "A DeliGo Eats é a plataforma oficial de entrega de comida da DeliGo Triunfal, Lda., empresa moçambicana de tecnologia e inovação sediada em Maputo.",
-    "brand": {"@type": "Brand", "name": "DeliGo Eats"},
-    "areaServed": {"@type": "Country", "name": "Moçambique"},
-    "applicationCategory": "FoodDelivery",
-    "founder": {"@type": "Person", "name": "Anwar Ismael"},
-    "sameAs": ["https://www.facebook.com/profile.php?id=61588898956501", "https://mz.linkedin.com/in/anwarismael"]
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://www.deligoeats.com/#deligo-triunfal",
+        "name": "DeliGo Triunfal, Lda.",
+        "url": "https://deligo-co-mz.lovable.app/",
+        "logo": "https://www.deligoeats.com/assets/1200x630wa%20(1).png",
+        "description": "Empresa moçambicana de tecnologia e soluções digitais sediada em Maputo, responsável pela plataforma DeliGo Eats.",
+        "address": {"@type": "PostalAddress", "addressLocality": "Maputo", "addressCountry": "MZ"},
+        "telephone": "+258 84 113 0015",
+        "email": "info@deligo.co.mz",
+        "founder": {"@type": "Person", "name": "Anwar Ismael"},
+        "sameAs": ["https://www.facebook.com/profile.php?id=61588898956501", "https://mz.linkedin.com/in/anwarismael"]
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://www.deligoeats.com/#deligo-eats",
+        "name": "DeliGo Eats",
+        "url": "https://www.deligoeats.com/",
+        "description": "Plataforma oficial de entrega de comida que liga clientes, restaurantes e estafetas em Moçambique.",
+        "applicationCategory": "FoodDelivery",
+        "operatingSystem": "Android, Web",
+        "areaServed": {"@type": "Country", "name": "Moçambique"},
+        "publisher": {"@id": "https://www.deligoeats.com/#deligo-triunfal"},
+        "brand": {"@type": "Brand", "name": "DeliGo Eats"}
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.deligoeats.com/#website",
+        "url": "https://www.deligoeats.com/",
+        "name": "DeliGo Eats | Food Delivery in Mozambique",
+        "publisher": {"@id": "https://www.deligoeats.com/#deligo-triunfal"},
+        "inLanguage": "pt-MZ"
+      }
+    ]
   }
   </script>
   <link rel="manifest" href="manifest.json">
