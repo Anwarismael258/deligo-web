@@ -4042,12 +4042,14 @@ class _ClientDashboardState extends State<ClientDashboard>
               ),
             ),
           const Spacer(),
-          _WebTopAction(
-            icon: Icons.search_rounded,
-            tooltip: 'Pesquisar',
-            onTap: () => setState(() => _selectedIndex = 1),
-          ),
-          const SizedBox(width: 10),
+          if (!isMobile) ...[
+            _WebTopAction(
+              icon: Icons.search_rounded,
+              tooltip: 'Pesquisar',
+              onTap: () => setState(() => _selectedIndex = 1),
+            ),
+            const SizedBox(width: 10),
+          ],
           Stack(
             clipBehavior: Clip.none,
             children: [
@@ -4114,12 +4116,18 @@ class _ClientDashboardState extends State<ClientDashboard>
 
   Widget _buildWebHome() {
     final now = _serverNowLocal;
+    final isMobile = MediaQuery.sizeOf(context).width < 700;
     return RefreshIndicator(
       onRefresh: _loadData,
       color: AppColors.primaryRed,
       child: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
-        padding: const EdgeInsets.fromLTRB(30, 34, 30, 56),
+        padding: EdgeInsets.fromLTRB(
+          isMobile ? 14 : 30,
+          isMobile ? 16 : 34,
+          isMobile ? 14 : 30,
+          isMobile ? 30 : 56,
+        ),
         child: Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 1240),
@@ -4150,8 +4158,10 @@ class _ClientDashboardState extends State<ClientDashboard>
                   ),
                 ),
                 const SizedBox(height: 26),
-                _buildWebSearch(),
-                const SizedBox(height: 30),
+                if (!isMobile) ...[
+                  _buildWebSearch(),
+                  const SizedBox(height: 30),
+                ],
                 if (_activeOrder != null) ...[
                   _WebSectionHeader(
                     eyebrow: 'EM MOVIMENTO',
