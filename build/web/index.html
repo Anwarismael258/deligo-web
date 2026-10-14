@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="/">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="Plataforma oficial de entregas da DeliGo Triunfal, Lda., empresa mocambicana de tecnologia sediada em Maputo. Descubra restaurantes, pratos e entregas no DeliGo Eats.">
+  <meta name="author" content="DeliGo Triunfal, Lda.">
+  <meta name="keywords" content="DeliGo Eats, DeliGo Triunfal, delivery Maputo, restaurantes Maputo, pedir comida online, Mocambique">
+  <meta name="theme-color" content="#e91c25">
+  <meta property="og:title" content="DeliGo Eats | Ecossistema DeliGo Triunfal">
+  <meta property="og:description" content="A plataforma oficial de entregas da DeliGo Triunfal, Lda., empresa mocambicana de tecnologia.">
+  <meta property="og:image" content="assets/1200x630wa%20(1).png">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="DeliGo">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <!-- Required by google_maps_flutter_web. Restrict this public browser key
+       to localhost and the DeliGo domains in Google Cloud Console. -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPtE539xkytezJT2tCpXEWo-x9txHtS6E"></script>
+
+  <title>DeliGo Eats | Ecossistema DeliGo Triunfal</title>
+  <link rel="canonical" href="https://www.deligoeats.com/">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "DeliGo Triunfal, Lda.",
+    "url": "https://www.deligoeats.com/",
+    "logo": "https://www.deligoeats.com/assets/1200x630wa%20(1).png",
+    "description": "Empresa moçambicana de tecnologia e inovação sediada em Maputo, responsável pelo ecossistema DeliGo e pela plataforma DeliGo Eats.",
+    "founder": {"@type": "Person", "name": "Anwar Ismael"},
+    "sameAs": ["https://www.facebook.com/profile.php?id=61588898956501", "https://mz.linkedin.com/in/anwarismael"]
+  }
+  </script>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    :root {
+      color-scheme: dark;
+      --red: #e91c25;
+      --red-strong: #ff2633;
+      --yellow: #ffb21a;
+      --green: #22c55e;
+      --blue: #38bdf8;
+      --ink: #070b12;
+      --muted: rgba(255, 255, 255, .72);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      height: 100%;
+      min-height: 100%;
+      background: var(--ink);
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    .site {
+      min-height: 100vh;
+      color: #fff;
+      background: #070b12;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      padding: 28px clamp(20px, 4vw, 58px);
+      isolation: isolate;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -3;
+      background-image: url("marketing/maputo-deligo-hero.png");
+      background-size: cover;
+      background-position: center right;
+      transform: scale(1.02);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background:
+        linear-gradient(90deg, rgba(5, 7, 11, .98) 0%, rgba(5, 7, 11, .78) 42%, rgba(5, 7, 11, .22) 100%),
+        radial-gradient(circle at 34% 55%, rgba(233, 28, 37, .24), transparent 28%),
+        radial-gradient(circle at 72% 48%, rgba(255, 178, 26, .18), transparent 24%);
+    }
+
+    .topbar,
+    .hero-grid,
+    .section-inner {
+      width: min(1160px, 100%);
+      margin: 0 auto;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      z-index: 1;
+    }
+
+    .brand {
+      font-size: clamp(34px, 5vw, 52px);
+      font-weight: 950;
+      letter-spacing: 0;
+      line-height: 1;
+    }
+
+    .brand span {
+      color: var(--red-strong);
+    }
+
+    .nav {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav a,
+    .btn {
+      height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 0 16px;
+      border-radius: 10px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 800;
+      border: 1px solid rgba(255, 255, 255, .18);
+      background: rgba(255, 255, 255, .08);
+      backdrop-filter: blur(12px);
+      white-space: nowrap;
+    }
+
+    .btn.primary {
+      background: var(--red);
+      border-color: var(--red);
+      box-shadow: 0 16px 34px rgba(233, 28, 37, .28);
+    }
+
+    .hero-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 560px) minmax(280px, 360px);
+      align-items: center;
+      gap: clamp(32px, 6vw, 86px);
+      padding: 70px 0 34px;
+    }
+
+    .pill {
+      width: fit-content;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, .2);
+      background: rgba(255, 255, 255, .08);
+      font-weight: 850;
+    }
+
+    .pill::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--green);
+      box-shadow: 0 0 18px var(--green);
+    }
+
+    h1 {
+      margin: 22px 0 18px;
+      max-width: 680px;
+      font-size: clamp(46px, 7vw, 78px);
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 620px;
+      color: var(--muted);
+      font-size: clamp(17px, 2.1vw, 21px);
+      line-height: 1.55;
+      font-weight: 600;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 48px;
+      max-width: 520px;
+    }
+
+    .metric,
+    .timeline-card,
+    .mini-card {
+      border: 1px solid rgba(255, 255, 255, .14);
+      background: rgba(7, 16, 29, .76);
+      border-radius: 8px;
+      backdrop-filter: blur(18px);
+    }
+
+    .metric {
+      padding: 16px;
+    }
+
+    .metric b {
+      display: block;
+      margin-top: 8px;
+      font-size: 24px;
+    }
+
+    .metric small {
+      color: var(--muted);
+      font-weight: 750;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 14px;
+    }
+
+    .timeline-card {
+      padding: 18px;
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .timeline-card .icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--red);
+      font-size: 22px;
+    }
+
+    .timeline-card:nth-child(2) .icon {
+      background: var(--yellow);
+    }
+
+    .timeline-card:nth-child(3) .icon {
+      background: var(--green);
+    }
+
+    .timeline-card strong {
+      display: block;
+      font-size: 18px;
+    }
+
+    .timeline-card span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+    }
+
+    .route {
+      position: absolute;
+      inset: auto auto 13% 26%;
+      width: 44vw;
+      height: 38vh;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .route svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      filter: drop-shadow(0 0 20px rgba(255, 38, 51, .85));
+    }
+
+    .route path {
+      fill: none;
+      stroke: var(--red-strong);
+      stroke-width: 8;
+      stroke-linecap: round;
+      stroke-dasharray: 180 780;
+      animation: flow 4.6s linear infinite;
+    }
+
+    .route .yellow {
+      stroke: var(--yellow);
+      animation-delay: -2s;
+      filter: drop-shadow(0 0 18px rgba(255, 178, 26, .7));
+    }
+
+    @keyframes flow {
+      to {
+        stroke-dashoffset: -960;
+      }
+    }
+
+    section {
+      padding: 72px clamp(20px, 4vw, 58px);
+      background: #f6f7f9;
+      color: #121722;
+    }
+
+    section.dark {
+      background: #0b111c;
+      color: #fff;
+    }
+
+    .eyebrow {
+      color: var(--red);
+      font-size: 13px;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin: 10px 0 14px;
+      max-width: 760px;
+      font-size: clamp(34px, 4.6vw, 52px);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .section-lead {
+      max-width: 760px;
+      color: #566070;
+      font-size: 18px;
+      line-height: 1.55;
+      font-weight: 650;
+    }
+
+    .dark .section-lead {
+      color: rgba(255, 255, 255, .72);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .card {
+      padding: 24px;
+      border-radius: 8px;
+      background: #fff;
+      min-height: 220px;
+    }
+
+    .card .card-icon {
+      font-size: 34px;
+    }
+
+    .card h3 {
+      margin: 18px 0 12px;
+      font-size: 24px;
+      line-height: 1.15;
+    }
+
+    .card p {
+      margin: 0;
+      color: #566070;
+      line-height: 1.55;
+      font-weight: 650;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .chip {
+      padding: 11px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .08);
+      border: 1px solid rgba(255, 255, 255, .14);
+      color: #fff;
+      font-weight: 850;
+    }
+
+    .flutter-host {
+      display: none;
+    }
+
+    .app-boot {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: #070b12;
+      padding: 24px;
+    }
+
+    .app-boot-box {
+      display: grid;
+      gap: 12px;
+      justify-items: center;
+      text-align: center;
+    }
+
+    .app-boot-powered {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 750;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .app-boot-powered strong {
+      display: block;
+      margin-top: 5px;
+      color: #fff;
+      font-size: 17px;
+      font-weight: 900;
+      letter-spacing: .01em;
+      text-transform: none;
+    }
+
+    .app-boot-icon {
+      width: 84px;
+      height: 84px;
+      object-fit: contain;
+      border-radius: 22px;
+      opacity: 0;
+      transform: scale(.88);
+      animation: boot-icon-in .35s ease-out .28s forwards;
+    }
+
+    .app-boot .app-boot-icon,
+    .app-boot .app-boot-bar {
+      display: none;
+    }
+
+    .app-boot-bar {
+      width: min(260px, 72vw);
+      height: 4px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .12);
+    }
+
+    .app-boot-bar::before {
+      content: "";
+      display: block;
+      width: 42%;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--red-strong);
+      animation: boot-progress 1.1s ease-in-out infinite alternate;
+    }
+
+    .app-boot small {
+      color: var(--muted);
+      font-weight: 750;
+    }
+
+    @keyframes boot-progress {
+      from {
+        transform: translateX(-18%);
+      }
+
+      to {
+        transform: translateX(156%);
+      }
+    }
+
+    @keyframes boot-icon-in {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        min-height: auto;
+      }
+
+      .hero::after {
+        background:
+          linear-gradient(180deg, rgba(5, 7, 11, .96) 0%, rgba(5, 7, 11, .78) 58%, rgba(5, 7, 11, .42) 100%),
+          radial-gradient(circle at 50% 58%, rgba(233, 28, 37, .24), transparent 34%);
+      }
+
+      .nav a:not(.keep) {
+        display: none;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+        padding-top: 62px;
+      }
+
+      .timeline {
+        max-width: 520px;
+      }
+
+      .cards,
+      .metrics {
+        grid-template-columns: 1fr;
+      }
+
+      .route {
+        left: 14%;
+        width: 78vw;
+        opacity: .7;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main id="marketing-site" class="site" hidden>
+    <header class="hero">
+      <nav class="topbar" aria-label="Navegacao principal">
+        <div class="brand">Deli<span>Go</span></div>
+        <div class="nav">
+          <a href="#como-funciona">Como funciona</a>
+          <a href="#restaurantes">Restaurantes</a>
+          <a class="keep" href="/#/login">Entrar</a>
+        </div>
+      </nav>
+
+      <div class="route" aria-hidden="true">
+        <svg viewBox="0 0 800 420">
+          <path d="M40 370 C180 270 120 180 330 120 C520 65 560 240 760 78" />
+          <path class="yellow" d="M120 360 C320 300 360 240 470 182 C610 108 650 190 780 135" />
+        </svg>
+      </div>
+
+      <div class="hero-grid">
+        <div>
+          <div class="pill">Entrega rapida em Maputo</div>
+          <h1>Maputo nunca para. Nos tambem nao.</h1>
+          <p class="lead">Peca comida online, acompanhe em tempo real e conecte clientes, restaurantes e estafetas numa unica plataforma DeliGo.</p>
+          <div class="actions">
+            <a class="btn primary" href="/#/login?role=client">Pedir Agora</a>
+            <a class="btn" href="/#/register?role=client">Cadastrar Cliente</a>
+            <a class="btn" href="/#/register?role=restaurant">Cadastrar Restaurante</a>
+            <a class="btn" href="/#/register?role=courier">Ser Estafeta</a>
+          </div>
+          <div class="metrics" aria-label="Estatisticas em tempo real">
+            <div class="metric"><small>Pedidos ativos</small><b style="color: var(--red-strong)">128</b></div>
+            <div class="metric"><small>Entregas hoje</small><b style="color: var(--green)">1.247</b></div>
+            <div class="metric"><small>Restaurantes ativos</small><b style="color: var(--yellow)">86</b></div>
+            <div class="metric"><small>Estafetas online</small><b style="color: var(--blue)">312</b></div>
+          </div>
+        </div>
+
+        <aside class="timeline" aria-label="Estado de pedido em tempo real">
+          <div class="timeline-card"><div class="icon">🛍</div><div><strong>Cliente fez o pedido</strong><span>Polana, Maputo</span></div></div>
+          <div class="timeline-card"><div class="icon">🏪</div><div><strong>Restaurante recebeu</strong><span>Kudu Burger</span></div></div>
+          <div class="timeline-card"><div class="icon">🏍</div><div><strong>Estafeta a caminho</strong><span>Honda CG 125</span></div></div>
+        </aside>
+      </div>
+    </header>
+
+    <section id="como-funciona">
+      <div class="section-inner">
+        <div class="eyebrow">Uma plataforma, tres movimentos</div>
+        <h2>Cliente pede. Restaurante prepara. Estafeta entrega.</h2>
+        <p class="section-lead">A DeliGo junta pedido online, painel no computador e acompanhamento em tempo real para criar uma experiencia simples em Maputo.</p>
+        <div class="cards">
+          <article class="card"><div class="card-icon">📱</div><h3>Clientes pedem sem instalar</h3><p>A pessoa encontra a DeliGo no Google, entra ou cria conta e faz o pedido pelo mesmo fluxo do app.</p><p style="margin-top:16px"><a class="btn primary" href="/#/login?role=client">Login cliente</a> <a class="btn" href="/#/register?role=client">Cadastro</a></p></article>
+          <article id="restaurantes" class="card"><div class="card-icon">💻</div><h3>Restaurantes trabalham no computador</h3><p>Pedidos, pratos, status, vendas e carteira ficam no dashboard real do restaurante.</p><p style="margin-top:16px"><a class="btn primary" href="/#/login?role=restaurant">Login restaurante</a> <a class="btn" href="/#/register?role=restaurant">Cadastro</a></p></article>
+          <article class="card"><div class="card-icon">🛵</div><h3>Estafetas acompanham online</h3><p>Disponibilidade, entregas aceites, rotas e ganhos aparecem no dashboard real do estafeta.</p><p style="margin-top:16px"><a class="btn primary" href="/#/login?role=courier">Login estafeta</a> <a class="btn" href="/#/register?role=courier">Cadastro</a></p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="dark">
+      <div class="section-inner">
+        <div class="eyebrow">Google encontra a DeliGo</div>
+        <h2>Paginas preparadas para delivery em Maputo.</h2>
+        <p class="section-lead">A homepage fala a lingua que clientes pesquisam: delivery, restaurantes, comida online, pedidos e entrega rapida em Maputo.</p>
+        <div class="chips">
+          <span class="chip">delivery em Maputo</span>
+          <span class="chip">pedir comida online</span>
+          <span class="chip">restaurantes em Maputo</span>
+          <span class="chip">pizza delivery Maputo</span>
+          <span class="chip">trabalhar como estafeta</span>
+          <span class="chip">cadastrar restaurante</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="flutter-host" class="flutter-host"></div>
+  <div id="app-boot" class="app-boot" aria-live="polite">
+    <div class="app-boot-box">
+      <div class="app-boot-powered">Uma plataforma do ecossistema<strong>DeliGo Triunfal, LDA</strong></div>
+      <img class="app-boot-icon" src="assets/assets/1000162336.png" alt="Ícone oficial do DeliGo">
+      <div class="app-boot-bar" aria-hidden="true"></div>
+      <small>Tecnologia moçambicana.</small>
+    </div>
+  </div>
+  <script>
+    // Show the ecosystem identity before booting the same Flutter app as mobile.
+    document.getElementById("flutter-host").className = "";
+    document.getElementById("marketing-site")?.remove();
+    const bootScreen = document.getElementById("app-boot");
+    const bootStartedAt = Date.now();
+    const hideBootScreen = () => {
+      const remaining = Math.max(0, 1200 - (Date.now() - bootStartedAt));
+      window.setTimeout(() => {
+        if (bootScreen) {
+          bootScreen.style.display = "none";
+        }
+      }, remaining);
+    };
+    window.addEventListener("flutter-first-frame", hideBootScreen, {
+      once: true,
+    });
+    // Flutter can occasionally miss the first-frame browser event in debug
+    // sessions. The ecosystem screen must never prevent the actual app from
+    // becoming visible, so it has a strict maximum display time.
+    window.setTimeout(hideBootScreen, 1500);
+    const script = document.createElement("script");
+    script.src = "flutter_bootstrap.js";
+    script.async = true;
+    document.body.appendChild(script);
+  </script>
+</body>
+</html>
