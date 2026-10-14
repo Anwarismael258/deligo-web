@@ -2209,7 +2209,12 @@ class _RestaurantDashboardState extends State<RestaurantDashboard>
                 if (_tab == 1) _buildAwaitingConfirmationBanner(),
                 Expanded(
                   child: Container(
-                    margin: const EdgeInsets.fromLTRB(24, 20, 24, 0),
+                    margin: EdgeInsets.fromLTRB(
+                      isMobile ? 8 : 24,
+                      isMobile ? 10 : 20,
+                      isMobile ? 8 : 24,
+                      0,
+                    ),
                     decoration: const BoxDecoration(
                       color: Color(0xFF0B1020),
                       borderRadius: BorderRadius.vertical(
@@ -2451,7 +2456,7 @@ class _RestaurantDashboardState extends State<RestaurantDashboard>
   Widget _buildMerchantTopBar() {
     final isMobile = MediaQuery.sizeOf(context).width < 700;
     return Container(
-      height: 86,
+      height: isMobile ? 72 : 86,
       padding: EdgeInsets.symmetric(horizontal: isMobile ? 12 : 28),
       decoration: const BoxDecoration(
         color: Color(0xFFF5F5F2),

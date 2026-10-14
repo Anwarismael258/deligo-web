@@ -7520,11 +7520,12 @@ class _ClientDashboardState extends State<ClientDashboard>
   }
 
   Widget _buildClientProfileSummary(String location) {
+    final compact = MediaQuery.sizeOf(context).width < 430;
     return _clientProfileCard(
       child: Row(
         children: [
           CircleAvatar(
-            radius: 39,
+            radius: compact ? 36 : 39,
             backgroundColor: AppColors.primaryRed.withValues(alpha: 0.10),
             backgroundImage: _avatarUrl?.trim().isNotEmpty == true
                 ? NetworkImage(_avatarUrl!)
@@ -7588,7 +7589,7 @@ class _ClientDashboardState extends State<ClientDashboard>
             },
             iconAlignment: IconAlignment.end,
             icon: const Icon(Icons.chevron_right_rounded),
-            label: const Text('Ver perfil'),
+            label: compact ? const SizedBox.shrink() : const Text('Ver perfil'),
           ),
         ],
       ),
