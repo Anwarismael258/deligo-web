@@ -4151,8 +4151,6 @@ class _ClientDashboardState extends State<ClientDashboard>
                 ),
                 const SizedBox(height: 26),
                 _buildWebSearch(),
-                const SizedBox(height: 22),
-                _buildWebQuickActions(),
                 const SizedBox(height: 30),
                 if (_activeOrder != null) ...[
                   _WebSectionHeader(
@@ -4175,8 +4173,6 @@ class _ClientDashboardState extends State<ClientDashboard>
                   const SizedBox(height: 14),
                   _buildActiveOrderLoadingSkeleton(),
                 ],
-                _buildMarketingCampaignCenter(),
-                const SizedBox(height: 30),
                 _WebSectionHeader(
                   eyebrow: 'DESCOBRIR',
                   title: 'Explore ao seu ritmo',
@@ -4214,11 +4210,6 @@ class _ClientDashboardState extends State<ClientDashboard>
                 if (_smartCategoryCards.isNotEmpty) ...[
                   const SizedBox(height: 30),
                   _buildSmartCategoriesSection(),
-                ],
-                if (_scheduledDelivery != null ||
-                    (_groupOrderCode?.isNotEmpty ?? false)) ...[
-                  const SizedBox(height: 30),
-                  _buildPlanningCard(),
                 ],
                 const SizedBox(height: 34),
                 _WebSectionHeader(
@@ -4306,22 +4297,10 @@ class _ClientDashboardState extends State<ClientDashboard>
             color: Color(0xFF999999),
             fontWeight: FontWeight.w500,
           ),
-          suffixIcon: Padding(
-            padding: const EdgeInsets.all(10),
-            child: FilledButton.icon(
-              onPressed: () => setState(() => _selectedIndex = 1),
-              style: FilledButton.styleFrom(
-                backgroundColor: const Color(0xFF1A1A1A),
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(14),
-                ),
-              ),
-              icon: const Icon(Icons.tune_rounded, size: 18),
-              label: const Text('Explorar'),
-            ),
+          suffixIcon: const Icon(
+            Icons.search_rounded,
+            color: Color(0xFF1A1A1A),
           ),
-          suffixIconConstraints: const BoxConstraints(minWidth: 120),
         ),
       ),
     );
