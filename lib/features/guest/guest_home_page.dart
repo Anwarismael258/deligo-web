@@ -115,6 +115,8 @@ class _GuestHomePageState extends State<GuestHomePage> {
           child: ListView(
           padding: const EdgeInsets.fromLTRB(20, 12, 20, 40),
           children: [
+            const _AnnouncementTicker(),
+            const SizedBox(height: 12),
             _GuestHero(controller: _heroController, onPageChanged: (index) => setState(() => _heroIndex = index)),
             const SizedBox(height: 10),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: List.generate(3, (index) => AnimatedContainer(duration: const Duration(milliseconds: 250), margin: const EdgeInsets.symmetric(horizontal: 4), width: index == _heroIndex ? 26 : 8, height: 7, decoration: BoxDecoration(color: index == _heroIndex ? const Color(0xFFFF4D0A) : const Color(0xFF45668F), borderRadius: BorderRadius.circular(10))))),
@@ -347,7 +349,70 @@ class _MinimalFooter extends StatelessWidget {
     width: double.infinity,
     padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 20),
     decoration: BoxDecoration(color: const Color(0xFF030B1A), borderRadius: BorderRadius.circular(18), border: Border.all(color: const Color(0xFF192E50))),
-    child: const Center(child: Text('© 2026 DeliGo Triunfal, Lda. — Todos os direitos reservados.', textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w700))),
+    child: Column(children: [
+      const _AnnouncementTicker(reverse: true),
+      const SizedBox(height: 16),
+      const Text('© 2026 DeliGo Triunfal, Lda. — Todos os direitos reservados.', textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w700)),
+    ]),
+  );
+}
+
+class _AnnouncementTicker extends StatefulWidget {
+  const _AnnouncementTicker({this.reverse = false});
+  final bool reverse;
+
+  @override
+  State<_AnnouncementTicker> createState() => _AnnouncementTickerState();
+}
+
+class _AnnouncementTickerState extends State<_AnnouncementTicker>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 30),
+  )..repeat();
+
+  static const _items = [
+    'DELIGO EATS · A tua comida, mais perto de ti.',
+    'Descobre restaurantes e pratos disponíveis na tua zona.',
+    'Explora menus, adiciona ao carrinho e pede com confiança.',
+    'Suporte DeliGo disponível através dos canais oficiais.',
+  ];
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => ClipRRect(
+    borderRadius: BorderRadius.circular(12),
+    child: Container(
+      height: 34,
+      color: const Color(0xCC030B1A),
+      child: AnimatedBuilder(
+        animation: _controller,
+        builder: (context, child) => FractionalTranslation(
+          translation: Offset(
+            (widget.reverse ? 1 : -1) * _controller.value * 0.12,
+            0,
+          ),
+          child: child,
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [..._items, ..._items].map((item) => Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 18),
+            child: Row(children: [
+              const Icon(Icons.circle, size: 6, color: Color(0xFFFF4D0A)),
+              const SizedBox(width: 8),
+              Text(item, style: const TextStyle(color: Color(0xFFD1E4FF), fontSize: 12, fontWeight: FontWeight.w700)),
+            ]),
+          )).toList(),
+        ),
+      ),
+    ),
   );
 }
 
