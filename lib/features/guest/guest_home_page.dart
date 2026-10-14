@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -504,7 +505,10 @@ class _GuestTickerState extends State<_GuestTicker> {
           .map((line) => line.replaceFirst(RegExp(r'^\s*\d+\.\s*'), '').trim())
           .where((line) => line.isNotEmpty)
           .toList(growable: false);
-      if (mounted && phrases.isNotEmpty) setState(() => _phrases = phrases);
+      if (mounted && phrases.isNotEmpty) {
+        final randomized = List<String>.from(phrases)..shuffle(Random());
+        setState(() => _phrases = randomized);
+      }
     } catch (_) {
       // Keep the first phrase visible if the optional ticker asset is absent.
     }
