@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /#/login
+Disallow: /#/register
+Disallow: /#/checkout
+Disallow: /#/cart
+Disallow: /#/support
+
+Sitemap: https://www.deligoeats.com/sitemap.xml
