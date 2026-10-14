@@ -288,6 +288,14 @@ class AppRouter {
       }
 
       if (_isPublicRoute(location)) {
+        // Public pages remain reachable for guests, but authenticated users
+        // must keep the destination they explicitly requested. In particular,
+        // cart and support are shared entry points for both audiences.
+        if (location == '/cart' ||
+            location == '/support' ||
+            location.startsWith('/support/')) {
+          return null;
+        }
         if (_isMarketingRoute(location) ||
             location == '/app' ||
             location.startsWith('/invite/') ||
