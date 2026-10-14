@@ -156,10 +156,6 @@ class _GuestHomePageState extends State<GuestHomePage> {
                 labelStyle: TextStyle(fontWeight: FontWeight.w700, color: _selectedCategory == category ? Colors.white : const Color(0xFFB9D7FF)),
               ))).toList()),
             ),
-            if (_selectedCategory == 'Todos') ...[
-              const SizedBox(height: 28),
-              const _GuestExperiencePanels(),
-            ],
             const SizedBox(height: 28),
             if (_selectedCategory == 'Todos') Row(children: [
               Expanded(child: Text('Pratos em destaque', style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.white, fontWeight: FontWeight.w900))),
@@ -204,6 +200,10 @@ class _GuestHomePageState extends State<GuestHomePage> {
                 return Column(children: restaurants.map((restaurant) => _RestaurantCard(restaurant: restaurant)).toList());
               },
             ),
+            if (_selectedCategory == 'Todos') ...[
+              const SizedBox(height: 24),
+              const _GuestExperiencePanels(),
+            ],
             const SizedBox(height: 28),
             const _MinimalFooter(),
           ],
