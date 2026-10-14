@@ -3768,11 +3768,12 @@ class _ClientDashboardState extends State<ClientDashboard>
 
   Widget _buildWebDashboard() {
     const canvas = Color(0xFFF7F7F5);
+    final isMobile = MediaQuery.sizeOf(context).width < 700;
     return Scaffold(
       backgroundColor: canvas,
       body: Row(
         children: [
-          _buildWebSidebar(),
+          if (!isMobile) _buildWebSidebar(),
           Expanded(
             child: Column(
               children: [
@@ -3994,23 +3995,52 @@ class _ClientDashboardState extends State<ClientDashboard>
   }
 
   Widget _buildWebTopBar() {
+    final isMobile = MediaQuery.sizeOf(context).width < 700;
     return Container(
       height: 78,
-      padding: const EdgeInsets.symmetric(horizontal: 30),
+      padding: EdgeInsets.symmetric(horizontal: isMobile ? 14 : 30),
       decoration: const BoxDecoration(
         color: Color(0xFFF7F7F5),
         border: Border(bottom: BorderSide(color: Color(0xFFE9E8E4))),
       ),
       child: Row(
         children: [
-          const Text(
-            'Tudo o que precisa na cidade.',
-            style: TextStyle(
-              color: Color(0xFF717171),
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
+          if (isMobile) ...[
+            PopupMenuButton<int>(
+              tooltip: 'Abrir menu',
+              icon: const Icon(
+                Icons.more_vert_rounded,
+                color: Color(0xFF292929),
+              ),
+              onSelected: (index) => setState(() => _selectedIndex = index),
+              itemBuilder: (_) => const [
+                PopupMenuItem(value: 0, child: Text('Início')),
+                PopupMenuItem(value: 1, child: Text('Explorar')),
+                PopupMenuItem(value: 2, child: Text('Pedidos')),
+                PopupMenuItem(value: 3, child: Text('Favoritos')),
+                PopupMenuItem(value: 4, child: Text('Perfil')),
+              ],
             ),
-          ),
+            const SizedBox(width: 4),
+          ],
+          if (isMobile)
+            const Text(
+              'DeliGo',
+              style: TextStyle(
+                color: Color(0xFF191919),
+                fontSize: 19,
+                fontWeight: FontWeight.w900,
+              ),
+            )
+          else
+            const Text(
+              'Tudo o que precisa na cidade.',
+              style: TextStyle(
+                color: Color(0xFF717171),
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           const Spacer(),
           _WebTopAction(
             icon: Icons.search_rounded,

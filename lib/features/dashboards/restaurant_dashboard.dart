@@ -2184,6 +2184,7 @@ class _RestaurantDashboardState extends State<RestaurantDashboard>
   }
 
   Widget _buildMerchantWeb() {
+    final isMobile = MediaQuery.sizeOf(context).width < 700;
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F2),
       floatingActionButton: _tab == 2
@@ -2200,7 +2201,7 @@ class _RestaurantDashboardState extends State<RestaurantDashboard>
           : null,
       body: Row(
         children: [
-          _buildMerchantSidebar(),
+          if (!isMobile) _buildMerchantSidebar(),
           Expanded(
             child: Column(
               children: [
@@ -2448,15 +2449,36 @@ class _RestaurantDashboardState extends State<RestaurantDashboard>
   }
 
   Widget _buildMerchantTopBar() {
+    final isMobile = MediaQuery.sizeOf(context).width < 700;
     return Container(
       height: 86,
-      padding: const EdgeInsets.symmetric(horizontal: 28),
+      padding: EdgeInsets.symmetric(horizontal: isMobile ? 12 : 28),
       decoration: const BoxDecoration(
         color: Color(0xFFF5F5F2),
         border: Border(bottom: BorderSide(color: Color(0xFFE6E5E0))),
       ),
       child: Row(
         children: [
+          if (isMobile) ...[
+            PopupMenuButton<int>(
+              tooltip: 'Abrir menu',
+              icon: const Icon(
+                Icons.more_vert_rounded,
+                color: Color(0xFF191919),
+              ),
+              onSelected: (tab) => setState(() => _tab = tab),
+              itemBuilder: (_) => [
+                const PopupMenuItem(value: 0, child: Text('Visão geral')),
+                PopupMenuItem(value: 1, child: Text(_ordersTabLabel())),
+                const PopupMenuItem(value: 2, child: Text('Menu')),
+                const PopupMenuItem(value: 3, child: Text('Carteira')),
+                const PopupMenuItem(value: 4, child: Text('Receitas')),
+                const PopupMenuItem(value: 5, child: Text('Restaurante')),
+                const PopupMenuItem(value: 6, child: Text('Marketing')),
+              ],
+            ),
+            const SizedBox(width: 4),
+          ],
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -2485,49 +2507,65 @@ class _RestaurantDashboardState extends State<RestaurantDashboard>
               ],
             ),
           ),
-          InkWell(
-            borderRadius: BorderRadius.circular(999),
-            onTap: _toggleRestaurantOpenState,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
-              decoration: BoxDecoration(
+          if (isMobile)
+            IconButton(
+              tooltip: _isOpen ? 'Fechar restaurante' : 'Abrir restaurante',
+              onPressed: _toggleRestaurantOpenState,
+              icon: Icon(
+                Icons.circle,
+                size: 14,
                 color: _isOpen
-                    ? const Color(0xFFE8F6EF)
-                    : const Color(0xFFF3E8E8),
-                borderRadius: BorderRadius.circular(999),
-                border: Border.all(
+                    ? const Color(0xFF188A57)
+                    : const Color(0xFFB54A4A),
+              ),
+            )
+          else
+            InkWell(
+              borderRadius: BorderRadius.circular(999),
+              onTap: _toggleRestaurantOpenState,
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 14,
+                  vertical: 9,
+                ),
+                decoration: BoxDecoration(
                   color: _isOpen
-                      ? const Color(0xFFC7E8D7)
-                      : const Color(0xFFE8CACA),
+                      ? const Color(0xFFE8F6EF)
+                      : const Color(0xFFF3E8E8),
+                  borderRadius: BorderRadius.circular(999),
+                  border: Border.all(
+                    color: _isOpen
+                        ? const Color(0xFFC7E8D7)
+                        : const Color(0xFFE8CACA),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 8,
+                      height: 8,
+                      decoration: BoxDecoration(
+                        color: _isOpen
+                            ? const Color(0xFF188A57)
+                            : const Color(0xFFB54A4A),
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      _isOpen ? 'Aberto agora' : 'Fechado',
+                      style: TextStyle(
+                        color: _isOpen
+                            ? const Color(0xFF176A47)
+                            : const Color(0xFF8D3838),
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              child: Row(
-                children: [
-                  Container(
-                    width: 8,
-                    height: 8,
-                    decoration: BoxDecoration(
-                      color: _isOpen
-                          ? const Color(0xFF188A57)
-                          : const Color(0xFFB54A4A),
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    _isOpen ? 'Aberto agora' : 'Fechado',
-                    style: TextStyle(
-                      color: _isOpen
-                          ? const Color(0xFF176A47)
-                          : const Color(0xFF8D3838),
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                ],
-              ),
             ),
-          ),
-          const SizedBox(width: 12),
+          if (!isMobile) const SizedBox(width: 12),
           _MerchantTopAction(
             icon: Icons.notifications_none_rounded,
             tooltip: 'Notificações',

@@ -98,6 +98,14 @@ class _GuestHomePageState extends State<GuestHomePage> {
         title: RichText(text: const TextSpan(children: [TextSpan(text: 'Deli', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: 26, letterSpacing: 1.2)), TextSpan(text: 'G', style: TextStyle(color: Color(0xFFFFB000), fontWeight: FontWeight.w900, fontSize: 28, letterSpacing: 1.2)), TextSpan(text: 'O', style: TextStyle(color: Color(0xFFFF4D0A), fontWeight: FontWeight.w900, fontSize: 28, letterSpacing: 1.2))])),
         actions: [
           IconButton(
+            tooltip: 'Baixar aplicação Android',
+            onPressed: () => launchUrl(
+              Uri.parse('https://drive.google.com/file/d/1xsE3kekCDu3tRPFI2tUuzgg-SzOU5nvp/view?usp=sharing'),
+              mode: LaunchMode.externalApplication,
+            ),
+            icon: const Icon(Icons.android_rounded, color: Color(0xFF8ED081)),
+          ),
+          IconButton(
             tooltip: 'Carrinho',
             onPressed: () => context.push('/cart'),
             icon: const Icon(Icons.shopping_bag_outlined),
@@ -520,6 +528,16 @@ class _GuestSidebar extends StatelessWidget {
           title: 'Contactos DeliGo',
           body: 'Apoio, institucional e carreiras',
           onTap: () => launchUrl(Uri.parse('mailto:suporte@deligoeats.com'), mode: LaunchMode.externalApplication),
+        ),
+        const SizedBox(height: 10),
+        _SidebarInfoCard(
+          icon: Icons.android_rounded,
+          title: 'Aplicação Android',
+          body: 'Baixar a app DeliGo para Android',
+          onTap: () => launchUrl(
+            Uri.parse('https://drive.google.com/file/d/1xsE3kekCDu3tRPFI2tUuzgg-SzOU5nvp/view?usp=sharing'),
+            mode: LaunchMode.externalApplication,
+          ),
         ),
         const Spacer(),
         const _GuestTicker(),
