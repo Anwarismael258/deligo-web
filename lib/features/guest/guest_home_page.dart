@@ -4,8 +4,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../services/app_language_controller.dart';
+import '../../services/app_strings.dart';
 import '../../services/restaurant_service.dart';
 import '../categories/deligo_food_categories.dart';
 import '../../shared/models/menu_item.dart';
@@ -150,31 +153,51 @@ class _GuestHomePageState extends State<GuestHomePage> {
           ),
         ),
         actions: [
-          IconButton(
-            tooltip: 'Baixar aplicação Android',
-            onPressed: () => launchUrl(
-              Uri.parse(
-                'https://drive.google.com/file/d/1xsE3kekCDu3tRPFI2tUuzgg-SzOU5nvp/view?usp=sharing',
+          Tooltip(
+            message: 'Baixar aplicação Android',
+            child: InkWell(
+              borderRadius: BorderRadius.circular(12),
+              onTap: () => launchUrl(
+                Uri.parse(
+                  'https://drive.google.com/file/d/1xsE3kekCDu3tRPFI2tUuzgg-SzOU5nvp/view?usp=sharing',
+                ),
+                mode: LaunchMode.externalApplication,
               ),
-              mode: LaunchMode.externalApplication,
+              child: Padding(
+                padding: const EdgeInsets.all(5),
+                child: Image.asset(
+                  'assets/marketing/deligo-android.jfif',
+                  width: 34,
+                  height: 34,
+                  fit: BoxFit.contain,
+                  errorBuilder: (_, __, ___) => const Icon(
+                    Icons.android_rounded,
+                    color: Color(0xFF8ED081),
+                    size: 28,
+                  ),
+                ),
+              ),
             ),
-            icon: const Icon(Icons.android_rounded, color: Color(0xFF8ED081)),
           ),
-          TextButton(
+          PopupMenuButton<String>(
+            tooltip: 'Idioma',
+            icon: const Icon(Icons.language_rounded, size: 21),
+            onSelected: (value) =>
+                context.read<AppLanguageController>().setLanguage(value),
+            itemBuilder: (_) => const [
+              PopupMenuItem(value: 'pt', child: Text('🇲🇿  Português')),
+              PopupMenuItem(value: 'en', child: Text('🇬🇧  English')),
+            ],
+          ),
+          IconButton(
+            tooltip: AppStrings.of(context, 'enter'),
             onPressed: () => context.go('/login'),
-            style: TextButton.styleFrom(
-              foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              minimumSize: const Size(0, 38),
-            ),
-            child: const Text(
-              'Entrar / Registar',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 13,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
+            icon: const Icon(Icons.person_outline_rounded, size: 22),
+          ),
+          IconButton(
+            tooltip: AppStrings.of(context, 'create_account'),
+            onPressed: () => context.go('/register'),
+            icon: const Icon(Icons.person_add_alt_1_rounded, size: 21),
           ),
           const SizedBox(width: 4),
         ],
@@ -463,7 +486,6 @@ class _GuestHero extends StatelessWidget {
             'Descobre restaurantes, escolhe os teus pratos favoritos e acompanha a tua entrega.',
         image: 'assets/marketing/deligo-food-hero.png',
         primary: 'Explorar restaurantes',
-        secondary: 'Entrar',
         action: () => context.go('/home'),
       ),
       (
@@ -472,7 +494,6 @@ class _GuestHero extends StatelessWidget {
             'Apresenta os teus pratos, recebe pedidos e alcança novos clientes com a DeliGo.',
         image: 'assets/marketing/maputo-deligo-hero.png',
         primary: 'Quero ser parceiro',
-        secondary: 'Conhecer vantagens',
         action: () => context.go('/register?role=restaurant'),
       ),
       (
@@ -481,7 +502,6 @@ class _GuestHero extends StatelessWidget {
             'Uma experiência de entrega pensada para aproximar pessoas e restaurantes.',
         image: 'assets/marketing/deligo-food-hero.png',
         primary: 'Começar agora',
-        secondary: 'Continuar a explorar',
         action: () => context.go('/register'),
       ),
     ];
@@ -557,17 +577,6 @@ class _GuestHero extends StatelessWidget {
                               ),
                             ),
                             child: Text(slide.primary),
-                          ),
-                          OutlinedButton(
-                            onPressed: () => context.go('/login'),
-                            style: OutlinedButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              side: const BorderSide(color: Colors.white54),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 14,
-                              ),
-                            ),
-                            child: Text(slide.secondary),
                           ),
                         ],
                       ),

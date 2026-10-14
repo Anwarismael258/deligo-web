@@ -33,6 +33,7 @@ class AppStrings {
       'wallet': 'Carteira',
       'next': 'Proximo',
       'enter': 'Entrar',
+      'create_account': 'Criar conta',
       'go_to_login': 'Ir para login',
       'choose_language': 'Escolha o idioma',
       'choose_language_desc':
@@ -103,6 +104,7 @@ class AppStrings {
       'wallet': 'Wallet',
       'next': 'Next',
       'enter': 'Enter',
+      'create_account': 'Create account',
       'go_to_login': 'Go to login',
       'choose_language': 'Choose your language',
       'choose_language_desc':

@@ -19,6 +19,10 @@ class AppLanguageController extends ChangeNotifier {
     final localValue = prefs.getString(storageKey);
     if (localValue == 'pt' || localValue == 'en') {
       _languageCode = localValue!;
+    } else {
+      _languageCode = PlatformDispatcher.instance.locale.languageCode == 'en'
+          ? 'en'
+          : 'pt';
     }
 
     try {
@@ -67,10 +71,13 @@ class AppLanguageController extends ChangeNotifier {
       final settings =
           (profile?['settings'] as Map?)?.cast<String, dynamic>() ?? {};
       settings['language'] = languageCode;
-      await Supabase.instance.client.from('profiles').update({
-        'settings': settings,
-        'updated_at': DateTime.now().toIso8601String(),
-      }).eq('id', user.id);
+      await Supabase.instance.client
+          .from('profiles')
+          .update({
+            'settings': settings,
+            'updated_at': DateTime.now().toIso8601String(),
+          })
+          .eq('id', user.id);
     } catch (error) {
       debugPrint('AppLanguageController.setLanguage error: $error');
     }
