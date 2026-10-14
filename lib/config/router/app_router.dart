@@ -350,8 +350,18 @@ class AppRouter {
       // Web, Android and iOS now enter through the same mobile app flow.
       GoRoute(path: '/', builder: (context, state) => const SplashPage()),
       GoRoute(path: '/app', builder: (context, state) => const SplashPage()),
-      GoRoute(path: '/home', builder: (context, state) => const GuestHomePage()),
-      GoRoute(path: '/help', builder: (context, state) => const GuestHelpPage()),
+      GoRoute(
+        path: '/home',
+        builder: (context, state) => const GuestHomePage(),
+      ),
+      GoRoute(
+        path: '/explore-restaurants',
+        builder: (context, state) => const GuestHomePage(onlyRestaurants: true),
+      ),
+      GoRoute(
+        path: '/help',
+        builder: (context, state) => const GuestHelpPage(),
+      ),
       GoRoute(
         path: '/delivery-maputo',
         builder: (context, state) => const OfficialHomePage(),

@@ -16,7 +16,9 @@ import '../../shared/models/menu_item.dart';
 import '../../shared/models/restaurant.dart';
 
 class GuestHomePage extends StatefulWidget {
-  const GuestHomePage({super.key});
+  const GuestHomePage({super.key, this.onlyRestaurants = false});
+
+  final bool onlyRestaurants;
 
   @override
   State<GuestHomePage> createState() => _GuestHomePageState();
@@ -268,34 +270,39 @@ class _GuestHomePageState extends State<GuestHomePage> {
             child: ListView(
               padding: const EdgeInsets.fromLTRB(20, 12, 20, 40),
               children: [
-                const _AnnouncementTicker(),
-                const SizedBox(height: 12),
-                _GuestHero(
-                  controller: _heroController,
-                  onPageChanged: (index) => setState(() => _heroIndex = index),
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(
-                    3,
-                    (index) => AnimatedContainer(
-                      duration: const Duration(milliseconds: 250),
-                      margin: const EdgeInsets.symmetric(horizontal: 4),
-                      width: index == _heroIndex ? 26 : 8,
-                      height: 7,
-                      decoration: BoxDecoration(
-                        color: index == _heroIndex
-                            ? const Color(0xFFFF4D0A)
-                            : const Color(0xFF45668F),
-                        borderRadius: BorderRadius.circular(10),
+                if (!widget.onlyRestaurants) const _AnnouncementTicker(),
+                if (!widget.onlyRestaurants) const SizedBox(height: 12),
+                if (!widget.onlyRestaurants)
+                  _GuestHero(
+                    controller: _heroController,
+                    onPageChanged: (index) =>
+                        setState(() => _heroIndex = index),
+                  ),
+                if (!widget.onlyRestaurants) const SizedBox(height: 10),
+                if (!widget.onlyRestaurants)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(
+                      3,
+                      (index) => AnimatedContainer(
+                        duration: const Duration(milliseconds: 250),
+                        margin: const EdgeInsets.symmetric(horizontal: 4),
+                        width: index == _heroIndex ? 26 : 8,
+                        height: 7,
+                        decoration: BoxDecoration(
+                          color: index == _heroIndex
+                              ? const Color(0xFFFF4D0A)
+                              : const Color(0xFF45668F),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 24),
+                if (!widget.onlyRestaurants) const SizedBox(height: 24),
                 Text(
-                  'Encontra o teu próximo sabor',
+                  widget.onlyRestaurants
+                      ? 'Todos os restaurantes'
+                      : 'Encontra o teu próximo sabor',
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     color: Colors.white,
                     fontWeight: FontWeight.w900,
@@ -303,7 +310,9 @@ class _GuestHomePageState extends State<GuestHomePage> {
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  'Escolhe uma categoria ou procura o que te apetece hoje.',
+                  widget.onlyRestaurants
+                      ? 'Pesquisa restaurantes e descobre onde pedir hoje.'
+                      : 'Escolhe uma categoria ou procura o que te apetece hoje.',
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     color: const Color(0xFF9FB3D1),
                   ),
@@ -340,44 +349,47 @@ class _GuestHomePageState extends State<GuestHomePage> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: _categories
-                        .map(
-                          (category) => Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: ChoiceChip(
-                              avatar: Icon(
-                                _categoryIcon(category),
-                                size: 17,
-                                color: _selectedCategory == category
-                                    ? Colors.white
-                                    : const Color(0xFFFF7A45),
-                              ),
-                              label: Text(
-                                category,
-                                style: const TextStyle(fontSize: 13),
-                              ),
-                              selected: _selectedCategory == category,
-                              onSelected: (_) => _selectCategory(category),
-                              selectedColor: const Color(0xFFFF4D0A),
-                              backgroundColor: const Color(0xFF07152D),
-                              side: const BorderSide(color: Color(0xFF234875)),
-                              labelStyle: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                color: _selectedCategory == category
-                                    ? Colors.white
-                                    : const Color(0xFFB9D7FF),
+                if (!widget.onlyRestaurants)
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: _categories
+                          .map(
+                            (category) => Padding(
+                              padding: const EdgeInsets.only(right: 10),
+                              child: ChoiceChip(
+                                avatar: Icon(
+                                  _categoryIcon(category),
+                                  size: 17,
+                                  color: _selectedCategory == category
+                                      ? Colors.white
+                                      : const Color(0xFFFF7A45),
+                                ),
+                                label: Text(
+                                  category,
+                                  style: const TextStyle(fontSize: 13),
+                                ),
+                                selected: _selectedCategory == category,
+                                onSelected: (_) => _selectCategory(category),
+                                selectedColor: const Color(0xFFFF4D0A),
+                                backgroundColor: const Color(0xFF07152D),
+                                side: const BorderSide(
+                                  color: Color(0xFF234875),
+                                ),
+                                labelStyle: TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  color: _selectedCategory == category
+                                      ? Colors.white
+                                      : const Color(0xFFB9D7FF),
+                                ),
                               ),
                             ),
-                          ),
-                        )
-                        .toList(),
+                          )
+                          .toList(),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 28),
-                if (_selectedCategory == 'Todos')
+                if (!widget.onlyRestaurants) const SizedBox(height: 28),
+                if (!widget.onlyRestaurants && _selectedCategory == 'Todos')
                   Row(
                     children: [
                       Expanded(
@@ -396,8 +408,9 @@ class _GuestHomePageState extends State<GuestHomePage> {
                       ),
                     ],
                   ),
-                if (_selectedCategory == 'Todos') const SizedBox(height: 12),
-                if (_selectedCategory == 'Todos')
+                if (!widget.onlyRestaurants && _selectedCategory == 'Todos')
+                  const SizedBox(height: 12),
+                if (!widget.onlyRestaurants && _selectedCategory == 'Todos')
                   FutureBuilder<List<MenuItem>>(
                     future: _featuredDishesFuture,
                     builder: (context, snapshot) {
@@ -492,12 +505,13 @@ class _GuestHomePageState extends State<GuestHomePage> {
                     );
                   },
                 ),
-                if (_selectedCategory == 'Todos') ...[
+                if (!widget.onlyRestaurants &&
+                    _selectedCategory == 'Todos') ...[
                   const SizedBox(height: 24),
                   const _GuestExperiencePanels(),
                 ],
                 const SizedBox(height: 28),
-                const _MinimalFooter(),
+                if (!widget.onlyRestaurants) const _MinimalFooter(),
               ],
             ),
           );
@@ -546,7 +560,7 @@ class _GuestHero extends StatelessWidget {
             : 'Descobre restaurantes, escolhe os teus pratos favoritos e acompanha a tua entrega.',
         image: 'assets/marketing/deligo-food-hero.png',
         primary: isEnglish ? 'Explore restaurants' : 'Explorar restaurantes',
-        action: () => context.go('/home'),
+        action: () => context.go('/explore-restaurants'),
       ),
       (
         title: isEnglish

@@ -2489,18 +2489,37 @@ class _RestaurantDashboardState extends State<RestaurantDashboard>
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  _restaurantName,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    color: Color(0xFF191919),
-                    fontSize: 21,
-                    fontWeight: FontWeight.w900,
-                    letterSpacing: -0.5,
+                if (isMobile)
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: CircleAvatar(
+                      radius: 18,
+                      backgroundColor: const Color(0xFFFFE2D9),
+                      backgroundImage: _restaurantImageUrl.trim().isNotEmpty
+                          ? NetworkImage(_restaurantImageUrl)
+                          : null,
+                      child: _restaurantImageUrl.trim().isEmpty
+                          ? const Icon(
+                              Icons.restaurant_rounded,
+                              color: Color(0xFFFF4D0A),
+                              size: 20,
+                            )
+                          : null,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 4),
+                if (!isMobile)
+                  Text(
+                    _restaurantName,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      color: Color(0xFF191919),
+                      fontSize: 21,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: -0.5,
+                    ),
+                  ),
+                if (!isMobile) const SizedBox(height: 4),
                 Text(
                   _merchantStatusLine(),
                   style: const TextStyle(
@@ -2578,21 +2597,6 @@ class _RestaurantDashboardState extends State<RestaurantDashboard>
             onTap: _restaurantNotifications.isEmpty
                 ? null
                 : _showRestaurantNotifications,
-          ),
-          const SizedBox(width: 10),
-          _MerchantTopAction(
-            icon: Icons.chat_bubble_outline_rounded,
-            tooltip: 'Mensagens',
-            count: _totalUnreadChatCount,
-            onTap: _totalUnreadChatCount > 0
-                ? () => setState(() => _tab = 1)
-                : null,
-          ),
-          const SizedBox(width: 10),
-          _MerchantTopAction(
-            icon: Icons.refresh_rounded,
-            tooltip: 'Atualizar',
-            onTap: _load,
           ),
           const SizedBox(width: 10),
           _MerchantTopAction(
