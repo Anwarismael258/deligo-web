@@ -508,10 +508,54 @@ class _GuestSidebar extends StatelessWidget {
         ),
         _GuestNavItem(icon: Icons.home_rounded, label: 'Início', selected: true, onTap: () => context.go('/home')),
         _GuestNavItem(icon: Icons.help_outline_rounded, label: 'Ajuda e suporte', onTap: () => launchUrl(Uri.parse('https://www.facebook.com/profile.php?id=61588898956501'), mode: LaunchMode.externalApplication)),
+        const SizedBox(height: 14),
+        const _SidebarInfoCard(
+          icon: Icons.lock_outline_rounded,
+          title: 'Pagamentos seguros',
+          body: 'M-Pesa  ·  e-Mola  ·  Cartões\nPlataforma integrada e segura.',
+        ),
+        const SizedBox(height: 10),
+        _SidebarInfoCard(
+          icon: Icons.mail_outline_rounded,
+          title: 'Contactos DeliGo',
+          body: 'Apoio, institucional e carreiras',
+          onTap: () => launchUrl(Uri.parse('mailto:suporte@deligoeats.com'), mode: LaunchMode.externalApplication),
+        ),
         const Spacer(),
         const _GuestTicker(),
       ]),
     );
+  }
+}
+
+class _SidebarInfoCard extends StatelessWidget {
+  const _SidebarInfoCard({required this.icon, required this.title, required this.body, this.onTap});
+  final IconData icon;
+  final String title;
+  final String body;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final card = Container(
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(11, 11, 10, 10),
+      decoration: BoxDecoration(
+        color: const Color(0xFF08162B),
+        borderRadius: BorderRadius.circular(13),
+        border: Border.all(color: const Color(0x334B76A8)),
+      ),
+      child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Icon(icon, size: 19, color: const Color(0xFFFF7A45)),
+        const SizedBox(width: 8),
+        Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(title, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w900)),
+          const SizedBox(height: 4),
+          Text(body, maxLines: 3, overflow: TextOverflow.ellipsis, style: const TextStyle(color: Color(0xFF9FB3D1), fontSize: 10, height: 1.3)),
+        ])),
+      ]),
+    );
+    return onTap == null ? card : InkWell(onTap: onTap, borderRadius: BorderRadius.circular(13), child: card);
   }
 }
 
