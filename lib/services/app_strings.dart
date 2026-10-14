@@ -1,0 +1,154 @@
+import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+
+import 'app_language_controller.dart';
+
+class AppStrings {
+  static const Map<String, Map<String, String>> _values = {
+    'pt': {
+      'app_title': 'Deligo',
+      'onboarding_title_1': 'DeliGo',
+      'onboarding_subtitle_1': 'Pedir ficou simples',
+      'onboarding_badge_1': 'Entrega local',
+      'onboarding_desc_1':
+          'Descubra restaurantes reais perto de si e faca pedidos em poucos toques.',
+      'onboarding_title_2': 'Acompanhe tudo',
+      'onboarding_subtitle_2': 'Chat e rastreamento no mesmo fluxo',
+      'onboarding_badge_2': 'Tempo real',
+      'onboarding_desc_2':
+          'Converse com restaurante e estafeta e acompanhe o pedido no mapa quando quiser.',
+      'onboarding_title_3': 'Pague com confianca',
+      'onboarding_subtitle_3': 'Carteira, M-Pesa e e-Mola',
+      'onboarding_badge_3': 'Checkout rapido',
+      'onboarding_desc_3':
+          'Escolha delivery ou retirada, confirme a compra e acompanhe cada etapa com clareza.',
+      'local_restaurants': 'Restaurantes locais',
+      'fast_delivery': 'Entrega rapida',
+      'favorites': 'Favoritos',
+      'chat': 'Chat',
+      'live_map': 'Mapa ao vivo',
+      'notifications': 'Notificacoes',
+      'mpesa': 'M-Pesa',
+      'emola': 'e-Mola',
+      'wallet': 'Carteira',
+      'next': 'Proximo',
+      'enter': 'Entrar',
+      'go_to_login': 'Ir para login',
+      'choose_language': 'Escolha o idioma',
+      'choose_language_desc':
+          'Pode mudar novamente depois no perfil ou nas configuracoes.',
+      'portuguese': 'Portugues',
+      'english': 'English',
+      'continue': 'Continuar',
+      'settings': 'Configuracoes',
+      'preferences': 'Preferencias',
+      'language': 'Idioma',
+      'currency': 'Moeda',
+      'dark_theme': 'Tema escuro',
+      'app_sounds': 'Sons do app',
+      'sound_desc': 'Cliques, alertas, erros e notificacoes',
+      'voice_mode': 'Voz do app',
+      'voice_mode_desc':
+          'Escolha como o Deligo fala consigo nos momentos mais importantes',
+      'voice_full': 'Voz completa',
+      'voice_important_only': 'Apenas eventos importantes',
+      'voice_off': 'Sem voz',
+      'save': 'Salvar',
+      'settings_saved': 'Configuracoes salvas',
+      'sign_out_all': 'Sair de todos os dispositivos',
+      'sessions_closed': 'Sessoes encerradas',
+      'your_account': 'Sua conta',
+      'danger_zone': 'Zona de risco',
+      'delete_account': 'Eliminar conta',
+      'delete_account_desc':
+          'Exclui a conta permanentemente e remove o acesso da app apos confirmacao.',
+      'delete_account_dialog_title': 'Eliminar conta',
+      'delete_account_dialog_body':
+          'Escreva DELETE para confirmar a exclusao permanente da conta.',
+      'delete_account_reason_label': 'Motivo (opcional)',
+      'delete_account_confirm_label': 'Confirmacao',
+      'delete_account_confirm_hint': 'Escreva DELETE',
+      'delete_account_sent': 'Conta excluida com sucesso.',
+      'cancel': 'Cancelar',
+      'profile_language': 'Idioma',
+      'profile_app_settings': 'Configuracoes do App',
+      'moz_moving': 'Mocambique em movimento',
+      'fast_delivery_simple_order': 'Entrega rapida. Pedido simples.',
+    },
+    'en': {
+      'app_title': 'Deligo',
+      'onboarding_title_1': 'DeliGo',
+      'onboarding_subtitle_1': 'Ordering made simple',
+      'onboarding_badge_1': 'Local delivery',
+      'onboarding_desc_1':
+          'Discover real restaurants near you and place orders in just a few taps.',
+      'onboarding_title_2': 'Track everything',
+      'onboarding_subtitle_2': 'Chat and tracking in one flow',
+      'onboarding_badge_2': 'Real time',
+      'onboarding_desc_2':
+          'Talk to the restaurant and courier and follow your order on the map whenever you want.',
+      'onboarding_title_3': 'Pay with confidence',
+      'onboarding_subtitle_3': 'Wallet, M-Pesa and e-Mola',
+      'onboarding_badge_3': 'Fast checkout',
+      'onboarding_desc_3':
+          'Choose delivery or pickup, confirm the purchase and follow every step clearly.',
+      'local_restaurants': 'Local restaurants',
+      'fast_delivery': 'Fast delivery',
+      'favorites': 'Favorites',
+      'chat': 'Chat',
+      'live_map': 'Live map',
+      'notifications': 'Notifications',
+      'mpesa': 'M-Pesa',
+      'emola': 'e-Mola',
+      'wallet': 'Wallet',
+      'next': 'Next',
+      'enter': 'Enter',
+      'go_to_login': 'Go to login',
+      'choose_language': 'Choose your language',
+      'choose_language_desc':
+          'You can change it again later in your profile or settings.',
+      'portuguese': 'Portuguese',
+      'english': 'English',
+      'continue': 'Continue',
+      'settings': 'Settings',
+      'preferences': 'Preferences',
+      'language': 'Language',
+      'currency': 'Currency',
+      'dark_theme': 'Dark theme',
+      'app_sounds': 'App sounds',
+      'sound_desc': 'Clicks, alerts, errors and notifications',
+      'voice_mode': 'App voice',
+      'voice_mode_desc':
+          'Choose how Deligo speaks to you during the most important moments',
+      'voice_full': 'Full voice',
+      'voice_important_only': 'Important events only',
+      'voice_off': 'No voice',
+      'save': 'Save',
+      'settings_saved': 'Settings saved',
+      'sign_out_all': 'Sign out from all devices',
+      'sessions_closed': 'Sessions closed',
+      'your_account': 'Your account',
+      'danger_zone': 'Danger zone',
+      'delete_account': 'Delete account',
+      'delete_account_desc':
+          'Permanently deletes the account and removes app access after confirmation.',
+      'delete_account_dialog_title': 'Delete account',
+      'delete_account_dialog_body':
+          'Type DELETE to confirm permanent account deletion.',
+      'delete_account_reason_label': 'Reason (optional)',
+      'delete_account_confirm_label': 'Confirmation',
+      'delete_account_confirm_hint': 'Type DELETE',
+      'delete_account_sent': 'Account deleted successfully.',
+      'cancel': 'Cancel',
+      'profile_language': 'Language',
+      'profile_app_settings': 'App settings',
+      'moz_moving': 'Mozambique in motion',
+      'fast_delivery_simple_order': 'Fast delivery. Simple ordering.',
+    },
+  };
+
+  static String of(BuildContext context, String key) {
+    final language = context.watch<AppLanguageController>().languageCode;
+    return _values[language]?[key] ?? _values['pt']![key] ?? key;
+  }
+}

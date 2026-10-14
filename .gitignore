@@ -1,0 +1,16 @@
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+build/
+*.jks
+*.keystore
+firebase-service-account.json
+service-account*.json
+.env
+.env.*
+android/
+ios/
+macos/
+windows/
+linux/
