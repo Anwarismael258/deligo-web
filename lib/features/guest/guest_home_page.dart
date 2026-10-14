@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -254,46 +255,9 @@ class _GuestHero extends StatelessWidget {
         );
         },
       ),
-      const Positioned(top: 8, right: 28, child: _FloatingFoodAsset(path: 'assets/guest/floating/donuts.jpg', size: 60, phase: 0.2)),
-      const Positioned(bottom: 0, right: 170, child: _FloatingFoodAsset(path: 'assets/guest/floating/leaves.jpg', size: 48, phase: 0.8)),
-      const Positioned(top: 22, left: 18, child: _FloatingFoodAsset(path: 'assets/guest/floating/fried-chicken.jpg', size: 52, phase: 1.3)),
     ]));
   }
 }
-
-class _FloatingFoodAsset extends StatefulWidget {
-  const _FloatingFoodAsset({required this.path, required this.size, required this.phase});
-  final String path;
-  final double size;
-  final double phase;
-
-  @override
-  State<_FloatingFoodAsset> createState() => _FloatingFoodAssetState();
-}
-
-class _FloatingFoodAssetState extends State<_FloatingFoodAsset> with SingleTickerProviderStateMixin {
-  late final AnimationController _controller = AnimationController(vsync: this, duration: const Duration(seconds: 5))..repeat(reverse: true);
-
-  @override
-  void dispose() { _controller.dispose(); super.dispose(); }
-
-  @override
-  Widget build(BuildContext context) {
-    return IgnorePointer(
-      child: AnimatedBuilder(
-        animation: _controller,
-        builder: (_, child) => Transform.translate(
-          offset: Offset(0, ((_controller.value + widget.phase) % 1) * 8 - 4),
-          child: Opacity(opacity: .32, child: child),
-        ),
-        child: ClipOval(
-          child: Image.asset(widget.path, width: widget.size, height: widget.size, fit: BoxFit.cover),
-        ),
-      ),
-    );
-  }
-}
-
 class _GuestExperiencePanels extends StatelessWidget {
   const _GuestExperiencePanels();
 
@@ -514,22 +478,36 @@ class _GuestTicker extends StatefulWidget {
 }
 
 class _GuestTickerState extends State<_GuestTicker> {
-  static const _phrases = [
-    'Descobre sabores incríveis em Maputo. A DeliGo entrega à tua porta.',
-    'O famoso camarão da Beira, entregue quentinho pelo DeliGo Eats.',
-    'Frango à Zambeziana de Quelimane, directo para a tua mesa.',
-    'De Maputo ao Niassa, aproxima-te dos melhores sabores moçambicanos.',
-    'Cabrito de Tete e mariscos de Pemba para saborear em casa.',
+  static const _fallbackPhrases = <String>[
+    'Descobre sabores incríveis em Maputo, a DeliGo entrega à porta da sua casa!',
   ];
+  List<String> _phrases = _fallbackPhrases;
   var _index = 0;
   Timer? _timer;
 
   @override
   void initState() {
     super.initState();
+    _loadPhrases();
     _timer = Timer.periodic(const Duration(milliseconds: 4500), (_) {
-      if (mounted) setState(() => _index = (_index + 1) % _phrases.length);
+      if (mounted && _phrases.isNotEmpty) {
+        setState(() => _index = (_index + 1) % _phrases.length);
+      }
     });
+  }
+
+  Future<void> _loadPhrases() async {
+    try {
+      final raw = await rootBundle.loadString('assets/guest/deligo_live_365.txt');
+      final phrases = raw
+          .split(RegExp(r'\r?\n'))
+          .map((line) => line.replaceFirst(RegExp(r'^\s*\d+\.\s*'), '').trim())
+          .where((line) => line.isNotEmpty)
+          .toList(growable: false);
+      if (mounted && phrases.isNotEmpty) setState(() => _phrases = phrases);
+    } catch (_) {
+      // Keep the first phrase visible if the optional ticker asset is absent.
+    }
   }
 
   @override
