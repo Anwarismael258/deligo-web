@@ -46,6 +46,7 @@ class _GuestHomePageState extends State<GuestHomePage> {
   ];
 
   Future<void> _requestUserLocation() async {
+    final isEnglish = context.read<AppLanguageController>().isEnglish;
     try {
       var permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
@@ -55,9 +56,11 @@ class _GuestHomePageState extends State<GuestHomePage> {
           permission == LocationPermission.deniedForever) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
+            SnackBar(
               content: Text(
-                'Ative a localização para calcular a rota e encontrar restaurantes próximos.',
+                isEnglish
+                    ? 'Enable location to calculate routes and find nearby restaurants.'
+                    : 'Ative a localização para calcular a rota e encontrar restaurantes próximos.',
               ),
             ),
           );
@@ -68,18 +71,22 @@ class _GuestHomePageState extends State<GuestHomePage> {
       if (!mounted) return;
       setState(() => _userPosition = position);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Text(
-            'Localização encontrada. Podemos calcular a rota da entrega.',
+            isEnglish
+                ? 'Location found. We can calculate the delivery route.'
+                : 'Localização encontrada. Podemos calcular a rota da entrega.',
           ),
         ),
       );
     } catch (_) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
+          SnackBar(
             content: Text(
-              'Não foi possível obter a localização neste momento.',
+              isEnglish
+                  ? 'Location could not be obtained right now.'
+                  : 'Não foi possível obter a localização neste momento.',
             ),
           ),
         );
@@ -160,6 +167,28 @@ class _GuestHomePageState extends State<GuestHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final isEnglish = context.watch<AppLanguageController>().isEnglish;
+    final categoryLabels = isEnglish
+        ? const {
+            'Todos': 'All',
+            'Local': 'Local',
+            'Carnes': 'Meat',
+            'Mariscos': 'Seafood',
+            'Fast Food': 'Fast food',
+            'Saudável': 'Healthy',
+            'Lanches': 'Snacks',
+            'Bebidas': 'Drinks',
+          }
+        : const {
+            'Todos': 'Todos',
+            'Local': 'Local',
+            'Carnes': 'Carnes',
+            'Mariscos': 'Mariscos',
+            'Fast Food': 'Fast Food',
+            'Saudável': 'Saudável',
+            'Lanches': 'Lanches',
+            'Bebidas': 'Bebidas',
+          };
     return Scaffold(
       backgroundColor: const Color(0xFF020817),
       appBar: AppBar(
@@ -200,7 +229,9 @@ class _GuestHomePageState extends State<GuestHomePage> {
         ),
         actions: [
           Tooltip(
-            message: 'Baixar aplicação Android',
+            message: isEnglish
+                ? 'Download Android app'
+                : 'Baixar aplicação Android',
             child: InkWell(
               borderRadius: BorderRadius.circular(12),
               onTap: () => launchUrl(
@@ -226,7 +257,7 @@ class _GuestHomePageState extends State<GuestHomePage> {
             ),
           ),
           IconButton(
-            tooltip: 'Usar a minha localização',
+            tooltip: isEnglish ? 'Use my location' : 'Usar a minha localização',
             onPressed: _requestUserLocation,
             icon: Icon(
               _userPosition == null
@@ -252,9 +283,15 @@ class _GuestHomePageState extends State<GuestHomePage> {
             tooltip: AppStrings.of(context, 'account'),
             icon: const Icon(Icons.person_outline_rounded, size: 22),
             onSelected: (value) => context.go(value),
-            itemBuilder: (_) => const [
-              PopupMenuItem(value: '/login', child: Text('Entrar')),
-              PopupMenuItem(value: '/register', child: Text('Criar conta')),
+            itemBuilder: (_) => [
+              PopupMenuItem(
+                value: '/login',
+                child: Text(isEnglish ? 'Sign in' : 'Entrar'),
+              ),
+              PopupMenuItem(
+                value: '/register',
+                child: Text(isEnglish ? 'Create account' : 'Criar conta'),
+              ),
             ],
           ),
           const SizedBox(width: 4),
@@ -301,8 +338,12 @@ class _GuestHomePageState extends State<GuestHomePage> {
                 if (!widget.onlyRestaurants) const SizedBox(height: 24),
                 Text(
                   widget.onlyRestaurants
-                      ? 'Todos os restaurantes'
-                      : 'Encontra o teu próximo sabor',
+                      ? (isEnglish
+                            ? 'All restaurants'
+                            : 'Todos os restaurantes')
+                      : (isEnglish
+                            ? 'Find your next flavour'
+                            : 'Encontra o teu próximo sabor'),
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     color: Colors.white,
                     fontWeight: FontWeight.w900,
@@ -311,8 +352,12 @@ class _GuestHomePageState extends State<GuestHomePage> {
                 const SizedBox(height: 6),
                 Text(
                   widget.onlyRestaurants
-                      ? 'Pesquisa restaurantes e descobre onde pedir hoje.'
-                      : 'Escolhe uma categoria ou procura o que te apetece hoje.',
+                      ? (isEnglish
+                            ? 'Search restaurants and discover where to order today.'
+                            : 'Pesquisa restaurantes e descobre onde pedir hoje.')
+                      : (isEnglish
+                            ? 'Choose a category or search for what you are craving.'
+                            : 'Escolhe uma categoria ou procura o que te apetece hoje.'),
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     color: const Color(0xFF9FB3D1),
                   ),
@@ -328,7 +373,9 @@ class _GuestHomePageState extends State<GuestHomePage> {
                   textInputAction: TextInputAction.search,
                   onSubmitted: (_) => _search(),
                   decoration: InputDecoration(
-                    hintText: 'Pesquisar restaurantes',
+                    hintText: isEnglish
+                        ? 'Search restaurants'
+                        : 'Pesquisar restaurantes',
                     prefixIcon: const Icon(Icons.search),
                     suffixIcon: IconButton(
                       onPressed: _search,
@@ -366,7 +413,7 @@ class _GuestHomePageState extends State<GuestHomePage> {
                                       : const Color(0xFFFF7A45),
                                 ),
                                 label: Text(
-                                  category,
+                                  categoryLabels[category]!,
                                   style: const TextStyle(fontSize: 13),
                                 ),
                                 selected: _selectedCategory == category,
@@ -394,7 +441,7 @@ class _GuestHomePageState extends State<GuestHomePage> {
                     children: [
                       Expanded(
                         child: Text(
-                          'Pratos em destaque',
+                          isEnglish ? 'Featured dishes' : 'Pratos em destaque',
                           style: Theme.of(context).textTheme.titleLarge
                               ?.copyWith(
                                 color: Colors.white,
@@ -420,16 +467,19 @@ class _GuestHomePageState extends State<GuestHomePage> {
                           child: Center(child: CircularProgressIndicator()),
                         );
                       if (snapshot.hasError)
-                        return const _MessageCard(
+                        return _MessageCard(
                           icon: Icons.restaurant_menu_outlined,
-                          message:
-                              'Os pratos em destaque estarão disponíveis em breve.',
+                          message: isEnglish
+                              ? 'Featured dishes will be available soon.'
+                              : 'Os pratos em destaque estarão disponíveis em breve.',
                         );
                       final dishes = snapshot.data ?? const <MenuItem>[];
                       if (dishes.isEmpty)
-                        return const _MessageCard(
+                        return _MessageCard(
                           icon: Icons.restaurant_menu_outlined,
-                          message: 'Ainda não há pratos publicados.',
+                          message: isEnglish
+                              ? 'There are no published dishes yet.'
+                              : 'Ainda não há pratos publicados.',
                         );
                       return SizedBox(
                         height: 230,
@@ -450,8 +500,10 @@ class _GuestHomePageState extends State<GuestHomePage> {
                     Expanded(
                       child: Text(
                         _selectedCategory == 'Todos'
-                            ? 'Restaurantes em destaque'
-                            : _selectedCategory,
+                            ? (isEnglish
+                                  ? 'Featured restaurants'
+                                  : 'Restaurantes em destaque')
+                            : categoryLabels[_selectedCategory]!,
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
                           color: Colors.white,
                           fontWeight: FontWeight.w900,
@@ -464,8 +516,10 @@ class _GuestHomePageState extends State<GuestHomePage> {
                       ),
                       child: Text(
                         _selectedCategory == 'Todos'
-                            ? 'Ver todos'
-                            : 'Ver todos em $_selectedCategory',
+                            ? (isEnglish ? 'View all' : 'Ver todos')
+                            : (isEnglish
+                                  ? 'View all in ${categoryLabels[_selectedCategory]!}'
+                                  : 'Ver todos em $_selectedCategory'),
                         style: const TextStyle(color: Color(0xFFFF7A45)),
                       ),
                     ),
@@ -483,16 +537,22 @@ class _GuestHomePageState extends State<GuestHomePage> {
                     if (snapshot.hasError) {
                       return _MessageCard(
                         icon: Icons.cloud_off_outlined,
-                        message: 'Não foi possível carregar os restaurantes.',
-                        actionLabel: 'Tentar novamente',
+                        message: isEnglish
+                            ? 'Restaurants could not be loaded.'
+                            : 'Não foi possível carregar os restaurantes.',
+                        actionLabel: isEnglish
+                            ? 'Try again'
+                            : 'Tentar novamente',
                         onAction: _search,
                       );
                     }
                     final restaurants = snapshot.data ?? const <Restaurant>[];
                     if (restaurants.isEmpty) {
-                      return const _MessageCard(
+                      return _MessageCard(
                         icon: Icons.restaurant_outlined,
-                        message: 'Ainda não há restaurantes disponíveis.',
+                        message: isEnglish
+                            ? 'There are no restaurants available yet.'
+                            : 'Ainda não há restaurantes disponíveis.',
                       );
                     }
                     return Column(
@@ -830,30 +890,35 @@ class _MinimalFooter extends StatelessWidget {
   const _MinimalFooter();
 
   @override
-  Widget build(BuildContext context) => Container(
-    width: double.infinity,
-    padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 20),
-    decoration: BoxDecoration(
-      color: const Color(0xFF030B1A),
-      borderRadius: BorderRadius.circular(18),
-      border: Border.all(color: const Color(0xFF192E50)),
-    ),
-    child: Column(
-      children: [
-        const _AnnouncementTicker(reverse: true),
-        const SizedBox(height: 16),
-        const Text(
-          '© 2026 DeliGo Triunfal, Lda. — Todos os direitos reservados.',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 13,
-            fontWeight: FontWeight.w700,
+  Widget build(BuildContext context) {
+    final isEnglish = context.watch<AppLanguageController>().isEnglish;
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 20),
+      decoration: BoxDecoration(
+        color: const Color(0xFF030B1A),
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: const Color(0xFF192E50)),
+      ),
+      child: Column(
+        children: [
+          const _AnnouncementTicker(reverse: true),
+          const SizedBox(height: 16),
+          Text(
+            isEnglish
+                ? '© 2026 DeliGo Triunfal, Lda. — All rights reserved.'
+                : '© 2026 DeliGo Triunfal, Lda. — Todos os direitos reservados.',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 13,
+              fontWeight: FontWeight.w700,
+            ),
           ),
-        ),
-      ],
-    ),
-  );
+        ],
+      ),
+    );
+  }
 }
 
 class _AnnouncementTicker extends StatefulWidget {
@@ -942,6 +1007,7 @@ class _GuestBenefitsFooter extends StatefulWidget {
 class _GuestBenefitsFooterState extends State<_GuestBenefitsFooter> {
   @override
   Widget build(BuildContext context) {
+    final isEnglish = context.watch<AppLanguageController>().isEnglish;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(26, 26, 26, 20),
@@ -980,12 +1046,14 @@ class _GuestBenefitsFooterState extends State<_GuestBenefitsFooter> {
                     ),
                   ),
                   const SizedBox(width: 14),
-                  const Expanded(
+                  Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Comida mais perto de ti.',
+                          isEnglish
+                              ? 'Food, closer to you.'
+                              : 'Comida mais perto de ti.',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 21,
@@ -994,7 +1062,9 @@ class _GuestBenefitsFooterState extends State<_GuestBenefitsFooter> {
                         ),
                         SizedBox(height: 4),
                         Text(
-                          'Uma experiência DeliGo simples, segura e feita para Maputo.',
+                          isEnglish
+                              ? 'A simple, safe DeliGo experience made for Maputo.'
+                              : 'Uma experiência DeliGo simples, segura e feita para Maputo.',
                           style: TextStyle(color: Color(0xFFB9D7FF)),
                         ),
                       ],
@@ -1005,7 +1075,9 @@ class _GuestBenefitsFooterState extends State<_GuestBenefitsFooter> {
               final partner = OutlinedButton.icon(
                 onPressed: () => context.go('/register?role=restaurant'),
                 icon: const Icon(Icons.arrow_forward_rounded),
-                label: const Text('Quero ser parceiro'),
+                label: Text(
+                  isEnglish ? 'Become a partner' : 'Quero ser parceiro',
+                ),
               );
               return compact
                   ? Column(
@@ -1027,23 +1099,31 @@ class _GuestBenefitsFooterState extends State<_GuestBenefitsFooter> {
             builder: (context, constraints) {
               final columns = [
                 _FooterColumn(
-                  title: 'Para clientes',
+                  title: isEnglish ? 'For customers' : 'Para clientes',
                   items: [
-                    'Descobrir restaurantes',
-                    'Como funciona',
-                    'Suporte 24/7',
+                    isEnglish
+                        ? 'Discover restaurants'
+                        : 'Descobrir restaurantes',
+                    isEnglish ? 'How it works' : 'Como funciona',
+                    isEnglish ? 'Support 24/7' : 'Suporte 24/7',
                   ],
                 ),
                 _FooterColumn(
-                  title: 'Para restaurantes',
-                  items: ['Ser parceiro', 'Como aderir', 'Contacto comercial'],
+                  title: isEnglish ? 'For restaurants' : 'Para restaurantes',
+                  items: [
+                    isEnglish ? 'Become a partner' : 'Ser parceiro',
+                    isEnglish ? 'How to join' : 'Como aderir',
+                    isEnglish ? 'Business contact' : 'Contacto comercial',
+                  ],
                 ),
                 _FooterColumn(
                   title: 'DeliGo',
                   items: [
-                    'Pagamento seguro',
-                    'Rastreamento em tempo real',
-                    'Privacidade',
+                    isEnglish ? 'Secure payments' : 'Pagamento seguro',
+                    isEnglish
+                        ? 'Real-time tracking'
+                        : 'Rastreamento em tempo real',
+                    isEnglish ? 'Privacy' : 'Privacidade',
                   ],
                 ),
               ];
@@ -1074,18 +1154,24 @@ class _GuestBenefitsFooterState extends State<_GuestBenefitsFooter> {
               OutlinedButton.icon(
                 onPressed: () => context.go('/register?role=client'),
                 icon: const Icon(Icons.person_add_alt_1, size: 17),
-                label: const Text('Criar conta cliente'),
+                label: Text(
+                  isEnglish ? 'Create customer account' : 'Criar conta cliente',
+                ),
               ),
               OutlinedButton.icon(
                 onPressed: () => context.go('/register?role=restaurant'),
                 icon: const Icon(Icons.storefront_outlined, size: 17),
-                label: const Text('Ser parceiro'),
+                label: Text(isEnglish ? 'Become a partner' : 'Ser parceiro'),
               ),
               OutlinedButton.icon(
                 onPressed: () =>
                     launchUrl(Uri(scheme: 'tel', path: '841130015')),
                 icon: const Icon(Icons.call_outlined, size: 17),
-                label: const Text('Suporte 24/7 · 841130015'),
+                label: Text(
+                  isEnglish
+                      ? 'Support 24/7 · 841130015'
+                      : 'Suporte 24/7 · 841130015',
+                ),
               ),
               OutlinedButton.icon(
                 onPressed: () => launchUrl(
@@ -1095,18 +1181,24 @@ class _GuestBenefitsFooterState extends State<_GuestBenefitsFooter> {
                   mode: LaunchMode.externalApplication,
                 ),
                 icon: const Icon(Icons.facebook, size: 17),
-                label: const Text('Mensagem no Facebook'),
+                label: Text(
+                  isEnglish ? 'Message on Facebook' : 'Mensagem no Facebook',
+                ),
               ),
               OutlinedButton.icon(
                 onPressed: () => context.go('/help'),
                 icon: const Icon(Icons.question_answer_outlined, size: 17),
-                label: const Text('Perguntas e respostas'),
+                label: Text(
+                  isEnglish ? 'Questions and answers' : 'Perguntas e respostas',
+                ),
               ),
             ],
           ),
           const SizedBox(height: 16),
           Text(
-            '© ${DateTime.now().year} DeliGo Triunfal, Lda. — Todos os direitos reservados.',
+            isEnglish
+                ? '© ${DateTime.now().year} DeliGo Triunfal, Lda. — All rights reserved.'
+                : '© ${DateTime.now().year} DeliGo Triunfal, Lda. — Todos os direitos reservados.',
             style: const TextStyle(color: Color(0xFF7892B5), fontSize: 12),
           ),
         ],
@@ -1150,6 +1242,7 @@ class _GuestSidebar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isEnglish = context.watch<AppLanguageController>().isEnglish;
     return Container(
       width: 220,
       color: const Color(0xFF030B1A),
@@ -1171,13 +1264,13 @@ class _GuestSidebar extends StatelessWidget {
           ),
           _GuestNavItem(
             icon: Icons.home_rounded,
-            label: 'Início',
+            label: isEnglish ? 'Home' : 'Início',
             selected: true,
             onTap: () => context.go('/home'),
           ),
           _GuestNavItem(
             icon: Icons.help_outline_rounded,
-            label: 'Ajuda e suporte',
+            label: isEnglish ? 'Help and support' : 'Ajuda e suporte',
             onTap: () => launchUrl(
               Uri.parse(
                 'https://www.facebook.com/profile.php?id=61588898956501',
@@ -1186,17 +1279,20 @@ class _GuestSidebar extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 14),
-          const _SidebarInfoCard(
+          _SidebarInfoCard(
             icon: Icons.lock_outline_rounded,
-            title: 'Pagamentos seguros',
-            body:
-                'M-Pesa  ·  e-Mola  ·  Cartões\nPlataforma integrada e segura.',
+            title: isEnglish ? 'Secure payments' : 'Pagamentos seguros',
+            body: isEnglish
+                ? 'M-Pesa  ·  e-Mola  ·  Cards\nIntegrated and secure platform.'
+                : 'M-Pesa  ·  e-Mola  ·  Cartões\nPlataforma integrada e segura.',
           ),
           const SizedBox(height: 10),
           _SidebarInfoCard(
             icon: Icons.mail_outline_rounded,
-            title: 'Contactos DeliGo',
-            body: 'Apoio, institucional e carreiras',
+            title: isEnglish ? 'DeliGo contacts' : 'Contactos DeliGo',
+            body: isEnglish
+                ? 'Support, company and careers'
+                : 'Apoio, institucional e carreiras',
             onTap: () => launchUrl(
               Uri.parse('mailto:suporte@deligoeats.com'),
               mode: LaunchMode.externalApplication,
@@ -1205,8 +1301,10 @@ class _GuestSidebar extends StatelessWidget {
           const SizedBox(height: 10),
           _SidebarInfoCard(
             icon: Icons.android_rounded,
-            title: 'Aplicação Android',
-            body: 'Baixar a app DeliGo para Android',
+            title: isEnglish ? 'Android app' : 'Aplicação Android',
+            body: isEnglish
+                ? 'Download the DeliGo Android app'
+                : 'Baixar a app DeliGo para Android',
             onTap: () => launchUrl(
               Uri.parse(
                 'https://drive.google.com/file/d/1xsE3kekCDu3tRPFI2tUuzgg-SzOU5nvp/view?usp=sharing',
