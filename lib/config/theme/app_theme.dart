@@ -337,6 +337,15 @@ class AppTheme {
         backgroundColor: const Color(0xFF020817),
         foregroundColor: Colors.white,
       ),
+      inputDecorationTheme: base.inputDecorationTheme.copyWith(
+        filled: true,
+        fillColor: const Color(0xFF07152D),
+        labelStyle: const TextStyle(color: Colors.white),
+        hintStyle: const TextStyle(color: Color(0xFF8BA4C6)),
+        prefixIconColor: const Color(0xFFB9D7FF),
+        enabledBorder: _inputBorder(const Color(0xFF2D5A91)),
+        focusedBorder: _inputBorder(const Color(0xFFFF4D0A), width: 1.8),
+      ),
       dividerColor: const Color(0xFF234875),
     );
   }

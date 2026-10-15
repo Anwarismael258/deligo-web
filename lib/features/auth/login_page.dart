@@ -429,7 +429,9 @@ class _LoginPageState extends State<LoginPage>
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 14,
-                                color: AppColors.darkGray,
+                                color: isStaffBuild
+                                    ? Colors.white70
+                                    : const Color(0xFFB9D7FF),
                               ),
                             ),
                             SizedBox(height: isSmallPhone ? 12 : 24),
@@ -437,17 +439,32 @@ class _LoginPageState extends State<LoginPage>
                               controller: _phoneController,
                               enabled: !_isLoading,
                               keyboardType: TextInputType.phone,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                              ),
                               decoration: InputDecoration(
                                 labelText: 'Número de telefone',
                                 hintText: '84XXXXXXX',
                                 filled: true,
-                                fillColor: Colors.white,
+                                fillColor: const Color(0xFF07152D),
+                                labelStyle: const TextStyle(
+                                  color: Colors.white,
+                                ),
+                                hintStyle: const TextStyle(
+                                  color: Color(0xFF8BA4C6),
+                                ),
+                                prefixStyle: const TextStyle(
+                                  color: Colors.white,
+                                ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(16),
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(16),
-                                  borderSide: BorderSide(color: Colors.black12),
+                                  borderSide: const BorderSide(
+                                    color: Color(0xFF2D5A91),
+                                  ),
                                 ),
                                 prefixIcon: const Icon(Icons.phone_android),
                                 prefixText: '+258 ',
@@ -459,11 +476,15 @@ class _LoginPageState extends State<LoginPage>
                                 controller: _fullNameController,
                                 enabled: !_isLoading,
                                 textCapitalization: TextCapitalization.words,
+                                style: const TextStyle(color: Colors.white),
                                 decoration: InputDecoration(
                                   labelText: 'Nome completo',
                                   hintText: 'Como foi convidado pelo Admin',
                                   filled: true,
-                                  fillColor: Colors.white,
+                                  fillColor: const Color(0xFF07152D),
+                                  labelStyle: const TextStyle(
+                                    color: Colors.white,
+                                  ),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(16),
                                   ),
@@ -476,11 +497,15 @@ class _LoginPageState extends State<LoginPage>
                                 enabled: !_isLoading,
                                 keyboardType: TextInputType.number,
                                 maxLength: 6,
+                                style: const TextStyle(color: Colors.white),
                                 decoration: InputDecoration(
                                   labelText: 'Codigo OTP do convite',
                                   counterText: '',
                                   filled: true,
-                                  fillColor: Colors.white,
+                                  fillColor: const Color(0xFF07152D),
+                                  labelStyle: const TextStyle(
+                                    color: Colors.white,
+                                  ),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(16),
                                   ),
@@ -494,10 +519,20 @@ class _LoginPageState extends State<LoginPage>
                                 controller: _passwordController,
                                 enabled: !_isLoading,
                                 obscureText: _obscurePassword,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                ),
                                 decoration: InputDecoration(
                                   labelText: 'Senha',
                                   filled: true,
-                                  fillColor: Colors.white,
+                                  fillColor: const Color(0xFF07152D),
+                                  labelStyle: const TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                  hintStyle: const TextStyle(
+                                    color: Color(0xFF8BA4C6),
+                                  ),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(16),
                                   ),
