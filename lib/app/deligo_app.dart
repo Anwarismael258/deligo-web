@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart' as legacy_provider;
 import 'package:app_links/app_links.dart';
@@ -80,7 +81,7 @@ class _DeligoAppState extends State<DeligoApp> {
     return MaterialApp.router(
       title: AppStrings.of(context, 'app_title'),
       routerConfig: AppRouter.router,
-      theme: AppTheme.lightTheme,
+      theme: kIsWeb ? AppTheme.webTheme : AppTheme.lightTheme,
       locale: language.locale,
       supportedLocales: const [Locale('pt'), Locale('en')],
       localizationsDelegates: const [

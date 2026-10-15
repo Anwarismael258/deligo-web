@@ -306,6 +306,41 @@ class AppTheme {
     );
   }
 
+  /// Web-only presentation theme shared by Guest, Client, Restaurant and
+  /// Courier surfaces. Native builds keep the established light theme.
+  static ThemeData get webTheme {
+    final base = lightTheme;
+    final darkScheme =
+        ColorScheme.fromSeed(
+          seedColor: const Color(0xFFFF4D0A),
+          brightness: Brightness.dark,
+        ).copyWith(
+          primary: const Color(0xFFFF4D0A),
+          secondary: const Color(0xFFFFB000),
+          surface: const Color(0xFF07152D),
+          onSurface: Colors.white,
+          onPrimary: Colors.white,
+          onSecondary: Colors.white,
+        );
+    return base.copyWith(
+      brightness: Brightness.dark,
+      colorScheme: darkScheme,
+      scaffoldBackgroundColor: const Color(0xFF020817),
+      canvasColor: const Color(0xFF020817),
+      cardColor: const Color(0xFF07152D),
+      dialogBackgroundColor: const Color(0xFF07152D),
+      textTheme: base.textTheme.apply(
+        bodyColor: Colors.white,
+        displayColor: Colors.white,
+      ),
+      appBarTheme: base.appBarTheme.copyWith(
+        backgroundColor: const Color(0xFF020817),
+        foregroundColor: Colors.white,
+      ),
+      dividerColor: const Color(0xFF234875),
+    );
+  }
+
   static OutlineInputBorder _inputBorder(Color color, {double width = 1}) {
     return OutlineInputBorder(
       borderRadius: BorderRadius.circular(16),
