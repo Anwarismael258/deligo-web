@@ -723,9 +723,10 @@
         "https://github.com/Anwarismael258/deligo-web/releases/download/v1/deligo-1.0.8-app-universal-release.apk";
       const replaceAndroidLinks = () => {
         document.querySelectorAll('a[href*="drive.google.com"]').forEach((link) => {
-          link.href = androidApk;
-          link.target = "_blank";
-          link.rel = "noopener";
+          link.remove();
+        });
+        document.querySelectorAll('img[src*="drive.google.com"], iframe[src*="drive.google.com"]').forEach((element) => {
+          element.remove();
         });
       };
       new MutationObserver(replaceAndroidLinks).observe(document.documentElement, {
