@@ -17,6 +17,7 @@
   <base href="/">
 
   <meta charset="UTF-8">
+  <link rel="preload" href="main.dart.js" as="script">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="description" content="DeliGo e a plataforma de delivery em Maputo para clientes, restaurantes e estafetas. Peca comida online, acompanhe em tempo real e receba rapido.">
   <meta name="keywords" content="DeliGo, delivery Maputo, pedir comida online, restaurantes Maputo, estafetas Maputo, delivery Mocambique">
@@ -480,7 +481,7 @@
       display: grid;
       place-items: center;
       color: #fff;
-      background: #070b12;
+      background: radial-gradient(circle at 50% 35%, #ef3038 0%, #b90916 55%, #65040b 100%);
       padding: 24px;
     }
 
@@ -540,11 +541,6 @@
       opacity: 0;
       transform: scale(.88);
       animation: boot-icon-in .35s ease-out .28s forwards;
-    }
-
-    .app-boot .app-boot-icon,
-    .app-boot .app-boot-bar {
-      display: none;
     }
 
     .app-boot-bar {
@@ -711,7 +707,7 @@
   <div id="app-boot" class="app-boot" aria-live="polite">
     <div class="app-boot-box">
       <div class="app-boot-powered">Uma plataforma do ecossistema<strong>DeliGo Triunfal, LDA</strong></div>
-      <img class="app-boot-icon" src="assets/assets/1000162336.png" alt="Ícone oficial do DeliGo">
+      <img class="app-boot-icon" src="favicon.png" alt="Ícone oficial do DeliGo">
       <div class="app-boot-bar" aria-hidden="true"></div>
       <small>Tecnologia moçambicana.</small>
     </div>
