@@ -258,6 +258,29 @@
       line-height: 1;
     }
 
+    #android-download-fab {
+      display: none;
+    }
+
+    @media (max-width: 700px) {
+      #android-download-fab {
+        display: inline-flex;
+        position: fixed;
+        right: 16px;
+        bottom: 18px;
+        z-index: 2147483000;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 16px;
+        border-radius: 999px;
+        color: #fff;
+        background: #e91c25;
+        box-shadow: 0 6px 22px rgba(0, 0, 0, .35);
+        font: 700 14px/1.1 system-ui, sans-serif;
+        text-decoration: none;
+      }
+    }
+
     .metrics {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -665,6 +688,9 @@
   </main>
 
   <div id="flutter-host" class="flutter-host"></div>
+  <a id="android-download-fab" href="https://github.com/Anwarismael258/deligo-web/releases/download/v1/deligo-1.0.8-app-universal-release.apk" target="_blank" rel="noopener" aria-label="Baixar o aplicativo DeliGo Eats para Android">
+    <span aria-hidden="true">↓</span> Baixar o app
+  </a>
   <div id="app-boot" class="app-boot" aria-live="polite">
     <div class="app-boot-box">
       <div class="app-boot-powered">Uma plataforma do ecossistema<strong>DeliGo Triunfal, LDA</strong></div>
