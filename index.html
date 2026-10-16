@@ -15,6 +15,12 @@
     the `--base-href` argument provided to `flutter build`.
   -->
   <base href="/">
+  <script>
+    // Public entry point: open Guest Mode before any authenticated route.
+    if (!window.location.hash || window.location.hash === "#/") {
+      window.history.replaceState(null, "", window.location.pathname + "#/home");
+    }
+  </script>
 
   <meta charset="UTF-8">
   <link rel="preload" href="main.dart.js" as="script">
