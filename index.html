@@ -634,6 +634,25 @@
     </div>
   </div>
   <script>
+    // Keep the Guest Mode Android download on the universal GitHub release.
+    (() => {
+      const androidApk =
+        "https://github.com/Anwarismael258/deligo-web/releases/download/v1/deligo-1.0.8-app-universal-release.apk";
+      const replaceAndroidLinks = () => {
+        document.querySelectorAll('a[href*="drive.google.com"]').forEach((link) => {
+          link.href = androidApk;
+          link.target = "_blank";
+          link.rel = "noopener";
+        });
+      };
+      new MutationObserver(replaceAndroidLinks).observe(document.documentElement, {
+        childList: true,
+        subtree: true,
+      });
+      replaceAndroidLinks();
+    })();
+  </script>
+  <script>
     // Show the ecosystem identity before booting the same Flutter app as mobile.
     document.getElementById("flutter-host").className = "";
     document.getElementById("marketing-site")?.remove();
