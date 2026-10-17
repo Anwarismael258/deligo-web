@@ -1,0 +1,28 @@
+
+export default function handler(req, res) {
+  if (req.method === "GET") {
+    const mode = req.query["hub.mode"];
+    const token = req.query["hub.verify_token"];
+    const challenge = req.query["hub.challenge"];
+
+    if (
+      mode === "subscribe" &&
+      token === process.env.WHATSAPP_VERIFY_TOKEN &&
+      challenge
+    ) {
+      return res.status(200).send(challenge);
+    }
+
+    return res.status(403).send("Verification failed");
+  }
+
+  if (req.method === "POST") {
+    // Receção inicial dos eventos da Meta.
+    // Antes de processar mensagens em produção,
+    // validar a assinatura X-Hub-Signature-256.
+    return res.status(200).send("EVENT_RECEIVED");
+  }
+
+  res.setHeader("Allow", "GET, POST");
+  return res.status(405).send("Method not allowed");
+}
