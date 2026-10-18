@@ -624,6 +624,17 @@
         opacity: .7;
       }
     }
+    /* Keep Flutter Web form values visible in login, registration and search fields. */
+    input, textarea, select {
+      color: #111827 !important;
+      -webkit-text-fill-color: #111827 !important;
+      caret-color: #111827 !important;
+      opacity: 1 !important;
+    }
+    input::placeholder, textarea::placeholder {
+      color: #64748b !important;
+      opacity: 1 !important;
+    }
   </style>
 </head>
 <body>
