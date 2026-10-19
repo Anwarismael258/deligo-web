@@ -15,56 +15,76 @@
     the `--base-href` argument provided to `flutter build`.
   -->
   <base href="/">
-  <script>
-    // Public entry point: open Guest Mode before any authenticated route.
-    if (!window.location.hash || window.location.hash === "#/") {
-      window.history.replaceState(null, "", window.location.pathname + "#/home");
-    }
-  </script>
 
   <meta charset="UTF-8">
-  <link rel="preload" href="main.dart.js" as="script">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="Peça comida online na DeliGo Eats. Entregas rápidas de restaurantes, bares, bottle stores e takeaway em Maputo e Moçambique. Descarregue o app e receba já!">
-  <meta name="keywords" content="entrega de comida Moçambique, aplicativo de entregas de refeição, pedir comida online Maputo, DeliGo Eats, restaurantes em Maputo, takeaway Moçambique, bottle store Maputo, entrega de bebidas Moçambique, estafetas Moçambique">
-  <meta name="theme-color" content="#e91c25">
-  <link rel="canonical" href="https://www.deligoeats.com/">
-  <meta property="og:title" content="DeliGo Eats | Entrega de Comida, Restaurantes e Bares em Moçambique">
-  <meta property="og:description" content="Peça comida, bebidas e takeaway online em Maputo e Moçambique com entregas rápidas da DeliGo Eats.">
-  <meta property="og:url" content="https://www.deligoeats.com/">
+  <meta name="description" content="DeliGo Eats é a plataforma oficial de entrega de comida da DeliGo Triunfal, Lda., empresa moçambicana de tecnologia. Descubra restaurantes, pratos e peça comida online em Moçambique.">
+  <meta name="author" content="DeliGo Triunfal, Lda.">
+  <meta name="application-name" content="DeliGo Eats">
   <meta property="og:site_name" content="DeliGo Eats">
+  <meta name="keywords" content="DeliGo Eats, DeliGo Triunfal, delivery Maputo, restaurantes Maputo, pedir comida online, Mocambique">
+  <meta name="theme-color" content="#e91c25">
+  <meta property="og:title" content="DeliGo Eats | Food Delivery in Mozambique">
+  <meta property="og:description" content="A plataforma oficial de entrega de comida da DeliGo Triunfal, Lda., empresa moçambicana de tecnologia.">
   <meta property="og:image" content="assets/1200x630wa%20(1).png">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
-
-  <!-- Google AdSense site verification / Auto ads -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4265425978957316"
-      crossorigin="anonymous"></script>
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="DeliGo">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <link rel="apple-touch-icon" href="deligo-app-icon.jfif">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png"/>
-  <link rel="shortcut icon" href="favicon.png"/>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "DeliGo Eats",
-    "url": "https://www.deligoeats.com/",
-    "logo": "https://www.deligoeats.com/favicon.png"
-  }
-  </script>
+  <link rel="icon" type="image/jpeg" href="deligo-app-icon.jfif"/>
 
   <!-- Required by google_maps_flutter_web. Restrict this public browser key
        to localhost and the DeliGo domains in Google Cloud Console. -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPtE539xkytezJT2tCpXEWo-x9txHtS6E"></script>
 
-  <title>DeliGo Eats | Entrega de Comida, Restaurantes e Bares em Moçambique</title>
+  <title>DeliGo Eats | Food Delivery in Mozambique</title>
+  <link rel="canonical" href="https://www.deligoeats.com/">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://www.deligoeats.com/#deligo-triunfal",
+        "name": "DeliGo Triunfal, Lda.",
+        "url": "https://deligo-co-mz.lovable.app/",
+        "logo": "https://www.deligoeats.com/assets/1200x630wa%20(1).png",
+        "description": "Empresa moçambicana de tecnologia e soluções digitais sediada em Maputo, responsável pela plataforma DeliGo Eats.",
+        "address": {"@type": "PostalAddress", "addressLocality": "Maputo", "addressCountry": "MZ"},
+        "telephone": "+258 84 113 0015",
+        "email": "info@deligo.co.mz",
+        "founder": {"@type": "Person", "name": "Anwar Ismael"},
+        "sameAs": ["https://www.facebook.com/profile.php?id=61588898956501", "https://mz.linkedin.com/in/anwarismael"]
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://www.deligoeats.com/#deligo-eats",
+        "name": "DeliGo Eats",
+        "url": "https://www.deligoeats.com/",
+        "description": "Plataforma oficial de entrega de comida que liga clientes, restaurantes e estafetas em Moçambique.",
+        "applicationCategory": "FoodDelivery",
+        "operatingSystem": "Android, Web",
+        "areaServed": {"@type": "Country", "name": "Moçambique"},
+        "publisher": {"@id": "https://www.deligoeats.com/#deligo-triunfal"},
+        "brand": {"@type": "Brand", "name": "DeliGo Eats"}
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.deligoeats.com/#website",
+        "url": "https://www.deligoeats.com/",
+        "name": "DeliGo Eats | Food Delivery in Mozambique",
+        "publisher": {"@id": "https://www.deligoeats.com/#deligo-triunfal"},
+        "inLanguage": "pt-MZ"
+      }
+    ]
+  }
+  </script>
   <link rel="manifest" href="manifest.json">
   <style>
     :root {
@@ -240,46 +260,6 @@
       flex-wrap: wrap;
       gap: 12px;
       margin-top: 30px;
-    }
-
-    .android-download {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: 14px;
-      padding: 12px 16px;
-      border: 1px solid rgba(125, 255, 179, .45);
-      border-radius: 12px;
-      color: #d8ffe5;
-      background: rgba(22, 163, 74, .18);
-      font-weight: 700;
-      text-decoration: none;
-    }
-
-    .android-download:hover {
-      background: rgba(22, 163, 74, .34);
-    }
-
-    .android-icon {
-      font-size: 1.35rem;
-      line-height: 1;
-    }
-
-    #android-download-fab {
-      display: inline-flex;
-      position: fixed;
-      right: 16px;
-      bottom: 18px;
-      z-index: 2147483000;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 16px;
-      border-radius: 999px;
-      color: #fff;
-      background: #e91c25;
-      box-shadow: 0 6px 22px rgba(0, 0, 0, .35);
-      font: 700 14px/1.1 system-ui, sans-serif;
-      text-decoration: none;
     }
 
     .metrics {
@@ -487,7 +467,7 @@
       display: grid;
       place-items: center;
       color: #fff;
-      background: radial-gradient(circle at 50% 35%, #ef3038 0%, #b90916 55%, #65040b 100%);
+      background: #070b12;
       padding: 24px;
     }
 
@@ -496,29 +476,6 @@
       gap: 12px;
       justify-items: center;
       text-align: center;
-    }
-
-    .app-boot-icon {
-      animation: deligo-pulse 1.4s ease-in-out infinite;
-    }
-
-    .app-boot-powered::after {
-      content: "A preparar o DeliGo...";
-      display: block;
-      margin-top: 10px;
-      color: rgba(255, 255, 255, .78);
-      font-size: 13px;
-      animation: deligo-loading 1.2s ease-in-out infinite alternate;
-    }
-
-    @keyframes deligo-pulse {
-      0%, 100% { transform: scale(.94); opacity: .78; }
-      50% { transform: scale(1.04); opacity: 1; }
-    }
-
-    @keyframes deligo-loading {
-      from { opacity: .45; }
-      to { opacity: 1; }
     }
 
     .app-boot-powered {
@@ -547,6 +504,11 @@
       opacity: 0;
       transform: scale(.88);
       animation: boot-icon-in .35s ease-out .28s forwards;
+    }
+
+    .app-boot .app-boot-icon,
+    .app-boot .app-boot-bar {
+      display: none;
     }
 
     .app-boot-bar {
@@ -623,22 +585,6 @@
         width: 78vw;
         opacity: .7;
       }
-
-    }
-
-    /* Keep Flutter Web form values readable on every theme. */
-    input,
-    textarea,
-    select {
-      color: #111827 !important;
-      -webkit-text-fill-color: #111827 !important;
-      caret-color: #111827 !important;
-    }
-
-    input::placeholder,
-    textarea::placeholder {
-      color: #64748b !important;
-      opacity: 1 !important;
     }
     /* Keep Flutter Web form values visible in login, registration and search fields. */
     input, textarea, select {
@@ -683,10 +629,6 @@
             <a class="btn" href="/#/register?role=restaurant">Cadastrar Restaurante</a>
             <a class="btn" href="/#/register?role=courier">Ser Estafeta</a>
           </div>
-          <a class="android-download" href="https://github.com/Anwarismael258/deligo-web/releases/download/v1/deligo-1.0.8-app-universal-release.apk" target="_blank" rel="noopener">
-            <span class="android-icon" aria-hidden="true">🤖</span>
-            <span>Baixar DeliGo Eats para Android</span>
-          </a>
           <div class="metrics" aria-label="Estatisticas em tempo real">
             <div class="metric"><small>Pedidos ativos</small><b style="color: var(--red-strong)">128</b></div>
             <div class="metric"><small>Entregas hoje</small><b style="color: var(--green)">1.247</b></div>
@@ -734,37 +676,14 @@
   </main>
 
   <div id="flutter-host" class="flutter-host"></div>
-  <a id="android-download-fab" href="https://github.com/Anwarismael258/deligo-web/releases/download/v1/deligo-1.0.8-app-universal-release.apk" target="_blank" rel="noopener" aria-label="Baixar o aplicativo DeliGo Eats para Android">
-    <span aria-hidden="true">↓</span> Android · Baixar o app
-  </a>
   <div id="app-boot" class="app-boot" aria-live="polite">
     <div class="app-boot-box">
       <div class="app-boot-powered">Uma plataforma do ecossistema<strong>DeliGo Triunfal, LDA</strong></div>
-      <img class="app-boot-icon" src="favicon.png" alt="Ícone oficial do DeliGo">
+      <img class="app-boot-icon" src="assets/assets/1000162336.png" alt="Ícone oficial do DeliGo">
       <div class="app-boot-bar" aria-hidden="true"></div>
       <small>Tecnologia moçambicana.</small>
     </div>
   </div>
-  <script>
-    // Keep the Guest Mode Android download on the universal GitHub release.
-    (() => {
-      const androidApk =
-        "https://github.com/Anwarismael258/deligo-web/releases/download/v1/deligo-1.0.8-app-universal-release.apk";
-      const replaceAndroidLinks = () => {
-        document.querySelectorAll('a[href*="drive.google.com"]').forEach((link) => {
-          link.remove();
-        });
-        document.querySelectorAll('img[src*="drive.google.com"], iframe[src*="drive.google.com"]').forEach((element) => {
-          element.remove();
-        });
-      };
-      new MutationObserver(replaceAndroidLinks).observe(document.documentElement, {
-        childList: true,
-        subtree: true,
-      });
-      replaceAndroidLinks();
-    })();
-  </script>
   <script>
     // Show the ecosystem identity before booting the same Flutter app as mobile.
     document.getElementById("flutter-host").className = "";
