@@ -462,6 +462,26 @@
       display: none;
     }
 
+    .institutional-link {
+      position: fixed;
+      right: 18px;
+      bottom: 16px;
+      z-index: 20;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: #0b1d35;
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(7, 21, 42, 0.24);
+    }
+    .institutional-link:hover,
+    .institutional-link:focus-visible {
+      background: #f47b20;
+      color: #ffffff;
+    }
+
     .app-boot {
       min-height: 100vh;
       display: grid;
@@ -676,6 +696,9 @@
   </main>
 
   <div id="flutter-host" class="flutter-host"></div>
+  <a class="institutional-link" href="https://www.deligotriunfal.site/" target="_blank" rel="noopener noreferrer">
+    Site institucional oficial · DeliGo Triunfal, Lda.
+  </a>
   <div id="app-boot" class="app-boot" aria-live="polite">
     <div class="app-boot-box">
       <div class="app-boot-powered">Uma plataforma do ecossistema<strong>DeliGo Triunfal, LDA</strong></div>
