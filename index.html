@@ -14,7 +14,7 @@
     This is a placeholder for base href that will be replaced by the value of
     the `--base-href` argument provided to `flutter build`.
   -->
-  <base href="/">
+  <base href="$FLUTTER_BASE_HREF">
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
@@ -665,35 +665,10 @@
   </main>
 
   <div id="flutter-host" class="flutter-host"></div>
-  <div id="app-boot" class="app-boot" aria-live="polite">
-    <div class="app-boot-box">
-      <div class="app-boot-powered">Uma plataforma do ecossistema<strong>DeliGo Triunfal, LDA</strong></div>
-      <img class="app-boot-icon" src="assets/assets/1000162336.png" alt="Ícone oficial do DeliGo">
-      <div class="app-boot-bar" aria-hidden="true"></div>
-      <small>Tecnologia moçambicana.</small>
-    </div>
-  </div>
   <script>
-    // Show the ecosystem identity before booting the same Flutter app as mobile.
+    // Boot the public Flutter home directly; the marketing shell is not a splash screen.
     document.getElementById("flutter-host").className = "";
     document.getElementById("marketing-site")?.remove();
-    const bootScreen = document.getElementById("app-boot");
-    const bootStartedAt = Date.now();
-    const hideBootScreen = () => {
-      const remaining = Math.max(0, 1200 - (Date.now() - bootStartedAt));
-      window.setTimeout(() => {
-        if (bootScreen) {
-          bootScreen.style.display = "none";
-        }
-      }, remaining);
-    };
-    window.addEventListener("flutter-first-frame", hideBootScreen, {
-      once: true,
-    });
-    // Flutter can occasionally miss the first-frame browser event in debug
-    // sessions. The ecosystem screen must never prevent the actual app from
-    // becoming visible, so it has a strict maximum display time.
-    window.setTimeout(hideBootScreen, 1500);
     const script = document.createElement("script");
     script.src = "flutter_bootstrap.js";
     script.async = true;
